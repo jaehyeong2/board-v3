@@ -1,6 +1,7 @@
 package jjfactory.boardtest.service.user;
 
 import jjfactory.boardtest.domain.user.User;
+import jjfactory.boardtest.dto.user.FindUserRes;
 import jjfactory.boardtest.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,13 @@ import java.util.NoSuchElementException;
 @Transactional
 public class UserService {
     private final UserRepository userRepository;
+
+
+
+    public FindUserRes findUserByUsername(String username){
+        User user = userRepository.findByUsername(username);
+        return new FindUserRes(user);
+    }
 
     public void deleteUser(Long id){
         User user = userRepository.findById(id).orElseThrow(() -> {

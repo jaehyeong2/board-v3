@@ -23,26 +23,32 @@ public class User extends BaseTimeEntity {
     private String username;
     private String password;
     private String phone;
+    private String role;
+    private String email;
 
     private Boolean activeState;
     private Gender gender;
+
     @Builder
-    public User(String name, String username, String password, String phone, Boolean activeState, Gender gender) {
+    public User(String name, String username, String password, String phone, String role, String email, Boolean activeState, Gender gender) {
         this.name = name;
         this.username = username;
         this.password = password;
         this.phone = phone;
+        this.role = role;
+        this.email = email;
         this.activeState = activeState;
         this.gender = gender;
     }
 
-    public static User createUser(UserDto dto,String password){
-        return new User()
-                .builder()
+    public static User createUser(UserDto dto, String password){
+        return builder()
                 .name(dto.getName())
                 .username(dto.getUsername())
                 .password(password)
                 .phone(dto.getPhone())
+                .email(dto.getEmail())
+                .role("ROLE_USER")
                 .gender(dto.getGender())
                 .activeState(true)
                 .build();

@@ -2,6 +2,7 @@ package jjfactory.boardtest.domain.board;
 
 import jjfactory.boardtest.domain.BaseTimeEntity;
 import jjfactory.boardtest.domain.user.User;
+import jjfactory.boardtest.dto.board.BoardDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,5 +31,17 @@ public class Board extends BaseTimeEntity{
         this.title = title;
         this.content = content;
         this.isView = isView;
+    }
+
+    public static Board createBoard(BoardDto dto,User user){
+        return builder()
+                .title(dto.getTitle())
+                .content(dto.getContent())
+                .user(user)
+                .build();
+    }
+
+    public void deleteBoard() {
+        isView = false;
     }
 }

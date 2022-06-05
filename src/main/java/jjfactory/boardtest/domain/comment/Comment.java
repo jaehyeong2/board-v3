@@ -3,6 +3,7 @@ package jjfactory.boardtest.domain.comment;
 import jjfactory.boardtest.domain.BaseTimeEntity;
 import jjfactory.boardtest.domain.board.Board;
 import jjfactory.boardtest.domain.user.User;
+import jjfactory.boardtest.dto.comment.CommentDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,5 +34,22 @@ public class Comment extends BaseTimeEntity {
         this.board = board;
         this.content = content;
         this.isView = isView;
+    }
+
+    public static Comment create(CommentDto dto,User user,Board board){
+        return builder()
+                .content(dto.getContent())
+                .user(user)
+                .board(board)
+                .isView(true)
+                .build();
+    }
+
+    public void deleteComment() {
+        isView = false;
+    }
+
+    public void changeContent(String content) {
+        this.content = content;
     }
 }
