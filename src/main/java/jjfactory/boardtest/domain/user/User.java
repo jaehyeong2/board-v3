@@ -1,6 +1,7 @@
 package jjfactory.boardtest.domain.user;
 
 import jjfactory.boardtest.domain.BaseTimeEntity;
+import jjfactory.boardtest.dto.user.UserDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,14 +23,32 @@ public class User extends BaseTimeEntity {
     private String username;
     private String password;
     private String phone;
-    private Gender gender;
 
+    private Boolean activeState;
+    private Gender gender;
     @Builder
-    public User(String name, String username, String password, String phone, Gender gender) {
+    public User(String name, String username, String password, String phone, Boolean activeState, Gender gender) {
         this.name = name;
         this.username = username;
         this.password = password;
         this.phone = phone;
+        this.activeState = activeState;
         this.gender = gender;
+    }
+
+    public static User createUser(UserDto dto,String password){
+        return new User()
+                .builder()
+                .name(dto.getName())
+                .username(dto.getUsername())
+                .password(password)
+                .phone(dto.getPhone())
+                .gender(dto.getGender())
+                .activeState(true)
+                .build();
+    }
+
+    public void withDraw(){
+        this.activeState = false;
     }
 }
