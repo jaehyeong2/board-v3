@@ -25,17 +25,19 @@ public class BoardService {
         return new FindBoardRes(board);
     }
 
-    public void createBoard(BoardDto dto, User user){
+    public String createBoard(BoardDto dto, User user){
         Board board = Board.createBoard(dto, user);
         boardRepository.save(board);
+        return "y";
     }
 
-    public void deleteBoard(Long id){
+    public String deleteBoard(Long id){
         Board board = boardRepository.findById(id).orElseThrow(() -> {
             throw new NoSuchElementException("조회 실패");
         });
 
         board.deleteBoard();
+        return "Y";
     }
 
     public void updateTitle(Long id){

@@ -21,7 +21,7 @@ public class AuthApi {
     }
 
     @PostMapping("/signup")
-    public void signUp(@RequestBody UserDto userDto){
-        authService.signUp(userDto);
+    public ApiResponse<String> signUp(@RequestBody UserDto userDto){
+        return new ApiResponse<>(authService.signUp(userDto));
     }
 }

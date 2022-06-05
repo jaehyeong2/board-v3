@@ -1,14 +1,15 @@
 package jjfactory.boardtest.controller.board;
 
+import jjfactory.boardtest.domain.user.User;
+import jjfactory.boardtest.dto.ApiResponse;
+import jjfactory.boardtest.dto.board.BoardDto;
 import jjfactory.boardtest.dto.board.FindBoardRes;
 import jjfactory.boardtest.service.board.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/boards")
 @RequiredArgsConstructor
@@ -17,7 +18,12 @@ public class BoardApiController {
     private final BoardService boardService;
 
     @GetMapping("/{boardId}")
-    public ResponseEntity<FindBoardRes> findBoard(@PathVariable Long boardId){
-        return new ResponseEntity<>(boardService.findBoard(boardId), HttpStatus.OK);
+    public ApiResponse<FindBoardRes> findBoard(@PathVariable Long boardId){
+        return new ApiResponse<>(boardService.findBoard(boardId));
+    }
+
+    @PostMapping("")
+    public ApiResponse<String> createBoard(@RequestBody BoardDto dto, @AuthenticationPrincipal User user){
+        return new ApiResponse<>(boardService.createBoard(dto,user));
     }
 }

@@ -43,6 +43,7 @@ public class Board extends BaseTimeEntity{
                 .title(dto.getTitle())
                 .content(dto.getContent())
                 .user(user)
+                .isView(true)
                 .build();
     }
 

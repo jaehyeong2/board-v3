@@ -28,12 +28,13 @@ public class AuthService {
     private final BCryptPasswordEncoder encoder;
     private final TokenProvider tokenProvider;
 
-    public void signUp(UserDto userDto){
+    public String signUp(UserDto userDto){
         String rawPassword = userDto.getPassword();
         String encPassword = encoder.encode(rawPassword);
 
         User user = User.createUser(userDto,encPassword);
         userRepository.save(user);
+        return "Y";
     }
 
     public TokenAndUserRes login(LoginDto dto){
@@ -52,8 +53,6 @@ public class AuthService {
     }
 
     public String createToken(User user){
-        List<String> roles = user.getRoles();
-        Long id = user.getId();
         return tokenProvider.createToken(String.valueOf(user.getId()),user.getRoles());
     }
 }
