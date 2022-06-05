@@ -19,12 +19,12 @@ import java.io.IOException;
 public class ExceptionFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        try{
+//        try{
             filterChain.doFilter(request,response);
-        } catch (EntityNotFoundException ex){
-            log.error("exception handler filter");
-            setErrorResponse(HttpStatus.FORBIDDEN,response,ex);
-        }
+//        } catch (EntityNotFoundException ex){
+//            log.error("exception handler filter");
+//            setErrorResponse(HttpStatus.FORBIDDEN,response,ex);
+//        }
     }
 
     public void setErrorResponse(HttpStatus status, HttpServletResponse response,Throwable ex){

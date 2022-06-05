@@ -1,6 +1,6 @@
 spring:
   jwt:
-    secret: jjfactory#!
+    secret: jjfactory
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://localhost:3306/boardV3?serverTimezone=Asia/Seoul

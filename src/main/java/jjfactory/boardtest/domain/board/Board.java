@@ -25,17 +25,21 @@ public class Board extends BaseTimeEntity{
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "board")
     private List<BoardImage> imageList = new ArrayList<>();
 
+    @Column(length = 100)
     private String title;
     private String content;
 
     private Boolean isView;
 
+    private int likeCount;
+
     @Builder
-    public Board(User user, String title, String content, Boolean isView) {
+    public Board(User user, String title, String content, Boolean isView,int likeCount) {
         this.user = user;
         this.title = title;
         this.content = content;
         this.isView = isView;
+        this.likeCount = likeCount;
     }
 
     public static Board createBoard(BoardDto dto,User user){
@@ -43,6 +47,7 @@ public class Board extends BaseTimeEntity{
                 .title(dto.getTitle())
                 .content(dto.getContent())
                 .user(user)
+                .likeCount(0)
                 .isView(true)
                 .build();
     }

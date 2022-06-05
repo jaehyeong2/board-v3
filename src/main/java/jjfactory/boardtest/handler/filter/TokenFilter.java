@@ -19,12 +19,10 @@ public class TokenFilter extends GenericFilterBean {
         this.tokenProvider =tokenProvider;
     }
 
-
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         String token = tokenProvider.resolveToken((HttpServletRequest) request);
         try {
-
             if(token !=null && tokenProvider.validateToken(token) && !token.equals("")){
                 Authentication auth = tokenProvider.getAuthentication(token);
                 SecurityContextHolder.getContext().setAuthentication(auth);

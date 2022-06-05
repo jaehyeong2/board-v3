@@ -28,12 +28,15 @@ public class Comment extends BaseTimeEntity {
 
     private Boolean isView;
 
+    private int likeCount;
+
     @Builder
-    public Comment(User user, Board board, String content, Boolean isView) {
+    public Comment(User user, Board board, String content, Boolean isView,int likeCount) {
         this.user = user;
         this.board = board;
         this.content = content;
         this.isView = isView;
+        this.likeCount = likeCount;
     }
 
     public static Comment create(CommentDto dto,User user,Board board){
@@ -42,6 +45,7 @@ public class Comment extends BaseTimeEntity {
                 .user(user)
                 .board(board)
                 .isView(true)
+                .likeCount(0)
                 .build();
     }
 

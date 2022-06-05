@@ -1,5 +1,6 @@
 package jjfactory.boardtest.controller.board;
 
+import jjfactory.boardtest.config.auth.PrincipalDetails;
 import jjfactory.boardtest.domain.user.User;
 import jjfactory.boardtest.dto.ApiResponse;
 import jjfactory.boardtest.dto.board.BoardDto;
@@ -23,7 +24,7 @@ public class BoardApiController {
     }
 
     @PostMapping("")
-    public ApiResponse<String> createBoard(@RequestBody BoardDto dto, @AuthenticationPrincipal User user){
-        return new ApiResponse<>(boardService.createBoard(dto,user));
+    public ApiResponse<String> createBoard(@RequestBody BoardDto dto, @AuthenticationPrincipal PrincipalDetails principal){
+        return new ApiResponse<>(boardService.createBoard(dto,principal.getUser()));
     }
 }

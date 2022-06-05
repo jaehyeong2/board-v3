@@ -21,6 +21,7 @@ public class Notice extends BaseTimeEntity{
     @OneToMany(fetch = FetchType.LAZY,mappedBy = "notice")
     private List<NoticeImage> imageList = new ArrayList<>();
 
+    @Column(length = 100)
     private String title;
     private String content;
 

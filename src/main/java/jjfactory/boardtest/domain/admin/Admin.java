@@ -2,19 +2,18 @@ package jjfactory.boardtest.domain.admin;
 
 import jjfactory.boardtest.domain.BaseTimeEntity;
 import jjfactory.boardtest.domain.user.Gender;
+import jjfactory.boardtest.domain.user.User;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-public class Admin extends BaseTimeEntity {
+public class Admin{
     @Id
     @GeneratedValue
     private Long id;
@@ -23,6 +22,8 @@ public class Admin extends BaseTimeEntity {
     private String username;
     private String password;
     private String phone;
+
+    @Enumerated(EnumType.STRING)
     private Gender gender;
 
     @Builder
