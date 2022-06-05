@@ -26,23 +26,26 @@ public class CommentService {
         });
     }
 
-    public void createComment(CommentDto dto, User user){
+    public String createComment(CommentDto dto, User user){
         Board board = boardRepository.findById(dto.getBoardId()).orElseThrow(() -> {
             throw new NoSuchElementException("조회실패");
         });
         Comment.create(dto,user,board);
+        return "Y";
     }
 
-    public void deleteComment(Long id){
+    public String deleteComment(Long id){
         Comment comment = commentRepository.findById(id).orElseThrow(() -> {
             throw new NoSuchElementException("조회실패");
         });
         comment.deleteComment();
+        return "Y";
     }
 
-    public void updateComment(CommentChangeDto dto){
+    public String updateContent(CommentChangeDto dto){
         Comment comment = getComment(dto);
         comment.changeContent(dto.getContent());
+        return "Y";
     }
 
     private Comment getComment(CommentChangeDto dto) {

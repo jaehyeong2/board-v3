@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -19,6 +21,9 @@ public class Board extends BaseTimeEntity{
 
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "board")
+    private List<BoardImage> imageList = new ArrayList<>();
 
     private String title;
     private String content;
@@ -39,6 +44,10 @@ public class Board extends BaseTimeEntity{
                 .content(dto.getContent())
                 .user(user)
                 .build();
+    }
+
+    public void addImage(BoardImage image) {
+        this.imageList.add(image);
     }
 
     public void deleteBoard() {

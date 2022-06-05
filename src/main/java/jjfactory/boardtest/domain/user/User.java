@@ -6,12 +6,12 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
 public class User extends BaseTimeEntity {
@@ -23,19 +23,23 @@ public class User extends BaseTimeEntity {
     private String username;
     private String password;
     private String phone;
-    private String role;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Builder.Default
+    private List<String> roles = new ArrayList<>();
     private String email;
 
     private Boolean activeState;
     private Gender gender;
 
+    protected User() {
+    }
     @Builder
-    public User(String name, String username, String password, String phone, String role, String email, Boolean activeState, Gender gender) {
+    public User(String name, String username, String password, String phone, String email, Boolean activeState, Gender gender,List<String> roles) {
         this.name = name;
         this.username = username;
         this.password = password;
         this.phone = phone;
-        this.role = role;
         this.email = email;
         this.activeState = activeState;
         this.gender = gender;
@@ -48,7 +52,7 @@ public class User extends BaseTimeEntity {
                 .password(password)
                 .phone(dto.getPhone())
                 .email(dto.getEmail())
-                .role("ROLE_USER")
+                .roles(List.of("ROLE_USER"))
                 .gender(dto.getGender())
                 .activeState(true)
                 .build();
