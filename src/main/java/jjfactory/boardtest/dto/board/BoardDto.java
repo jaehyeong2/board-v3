@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 public class BoardDto {
     private String title;
     private String content;
+    private Long categoryId;
 
     public BoardDto(Board board) {
         this.title = board.getTitle();

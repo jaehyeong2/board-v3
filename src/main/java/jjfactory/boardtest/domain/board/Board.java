@@ -42,19 +42,22 @@ public class Board extends BaseTimeEntity{
     private int likeCount;
 
     @Builder
-    public Board(User user, String title, String content, Boolean isView,int likeCount) {
+    public Board(User user, Category category, List<BoardImage> imageList, String title, String content, Boolean isView, int likeCount) {
         this.user = user;
+        this.category = category;
+        this.imageList = imageList;
         this.title = title;
         this.content = content;
         this.isView = isView;
         this.likeCount = likeCount;
     }
 
-    public static Board createBoard(BoardDto dto,User user){
+    public static Board createBoard(BoardDto dto, User user, Category category){
         return builder()
                 .title(dto.getTitle())
                 .content(dto.getContent())
                 .user(user)
+                .category(category)
                 .likeCount(0)
                 .isView(true)
                 .build();

@@ -36,6 +36,6 @@ public class BoardApi {
     public ApiResponse<String> createBoard(@RequestBody BoardDto dto,
                                            @RequestParam(required = false) List<MultipartFile> images,
                                            @AuthenticationPrincipal PrincipalDetails principal){
-        return new ApiResponse<>(boardService.createBoard(dto,images,principal.getUser()));
+        return new ApiResponse<>(boardService.createBoard(dto,images,principal.getUser().getId()));
     }
 }

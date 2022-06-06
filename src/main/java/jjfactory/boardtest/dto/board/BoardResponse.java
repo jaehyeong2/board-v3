@@ -1,7 +1,6 @@
 package jjfactory.boardtest.dto.board;
 
 import jjfactory.boardtest.domain.board.Board;
-import jjfactory.boardtest.domain.board.Category;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

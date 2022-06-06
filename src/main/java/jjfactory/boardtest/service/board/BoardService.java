@@ -1,6 +1,7 @@
 package jjfactory.boardtest.service.board;
 
 import jjfactory.boardtest.domain.board.Board;
+import jjfactory.boardtest.domain.board.Category;
 import jjfactory.boardtest.domain.user.User;
 import jjfactory.boardtest.dto.MyPageRequest;
 import jjfactory.boardtest.dto.PagingResponse;
@@ -10,6 +11,8 @@ import jjfactory.boardtest.dto.board.FindBoardRes;
 import jjfactory.boardtest.repository.board.BoardImageRepository;
 import jjfactory.boardtest.repository.board.BoardQueryRepository;
 import jjfactory.boardtest.repository.board.BoardRepository;
+import jjfactory.boardtest.repository.board.CategoryRepository;
+import jjfactory.boardtest.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,10 +29,13 @@ import java.util.stream.Collectors;
 @Transactional
 @Service
 public class BoardService {
+
+    private final int BOARD_WRITE_POINT = 5;
     private final BoardRepository boardRepository;
+    private final CategoryRepository categoryRepository;
     private final BoardQueryRepository boardQueryRepository;
     private final BoardImageRepository imageRepository;
-
+    private final UserRepository userRepository;
     @Transactional(readOnly = true)
     public FindBoardRes findBoard(Long id){
         Board board = boardRepository.findById(id).orElseThrow(() -> {
@@ -44,12 +50,24 @@ public class BoardService {
         return new PagingResponse<>(boards);
     }
 
-    public String createBoard(BoardDto dto, List<MultipartFile> images, User user){
-        user.pointUp(5);
-        Board board = Board.createBoard(dto, user);
-        boardRepository.save(board);
+    public String createBoard(BoardDto dto, List<MultipartFile> images, Long userId){
+        Category category = categoryRepository.findById(dto.getCategoryId()).orElseThrow(() -> {
+            throw new NoSuchElementException("조회 실패");
+        });
 
+        // userRepository에서 찾아오지 않고 Principaldetails에서 바로 getUser해오면, 포인트 변경이 감지가 안됨.
+        User user = userRepository.findById(userId).orElseThrow(() -> {
+            throw new NoSuchElementException("조회 실패");
+        });
+
+        Board board = Board.createBoard(dto, user,category);
+        boardRepository.save(board);
+        pointUpByBoardWrite(user);
         return "y";
+    }
+
+    private void pointUpByBoardWrite(User user) {
+        user.pointUp(BOARD_WRITE_POINT);
     }
 
     public String deleteBoard(Long id){
