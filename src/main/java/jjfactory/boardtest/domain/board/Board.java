@@ -67,7 +67,20 @@ public class Board extends BaseTimeEntity{
         this.imageList.add(image);
     }
 
+    public void updateBoard(String title,String content) {
+        this.title = title;
+        this.content = content;
+    }
+
     public void deleteBoard() {
         isView = false;
+    }
+
+    public void addLikeCount() {
+        this.likeCount += 1;
+    }
+
+    public void subtractLikeCount() {
+        this.likeCount -= 1;
     }
 }

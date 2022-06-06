@@ -5,6 +5,7 @@ import jjfactory.boardtest.dto.ApiPagingResponse;
 import jjfactory.boardtest.dto.ApiResponse;
 import jjfactory.boardtest.dto.board.BoardDto;
 import jjfactory.boardtest.dto.board.BoardResponse;
+import jjfactory.boardtest.dto.board.BoardUpdateReq;
 import jjfactory.boardtest.dto.board.FindBoardRes;
 import jjfactory.boardtest.service.board.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -37,5 +38,24 @@ public class BoardApi {
                                            @RequestParam(required = false) List<MultipartFile> images,
                                            @AuthenticationPrincipal PrincipalDetails principal){
         return new ApiResponse<>(boardService.createBoard(dto,images,principal.getUser().getId()));
+    }
+
+    @PatchMapping("/{id}")
+    public ApiResponse<String> updateBoard(@RequestBody BoardUpdateReq dto,
+                                           @PathVariable Long id,
+                                           @AuthenticationPrincipal PrincipalDetails principal){
+        return new ApiResponse<>(boardService.updateBoard(dto,id));
+    }
+
+    @PostMapping("/{boardId}/like")
+    public ApiResponse<String> likeBoard(@PathVariable Long boardId,
+                                         @AuthenticationPrincipal PrincipalDetails principal){
+        return new ApiResponse<>(boardService.boardLike(principal.getUser(),boardId));
+    }
+
+    @PostMapping("/{boardId}/dislike")
+    public ApiResponse<String> dislikeBoard(@PathVariable Long boardId,
+                                         @AuthenticationPrincipal PrincipalDetails principal){
+        return new ApiResponse<>(boardService.boardDislike(principal.getUser(),boardId));
     }
 }

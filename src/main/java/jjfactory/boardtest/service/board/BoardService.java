@@ -1,17 +1,16 @@
 package jjfactory.boardtest.service.board;
 
 import jjfactory.boardtest.domain.board.Board;
+import jjfactory.boardtest.domain.board.BoardLike;
 import jjfactory.boardtest.domain.board.Category;
 import jjfactory.boardtest.domain.user.User;
 import jjfactory.boardtest.dto.MyPageRequest;
 import jjfactory.boardtest.dto.PagingResponse;
 import jjfactory.boardtest.dto.board.BoardDto;
 import jjfactory.boardtest.dto.board.BoardResponse;
+import jjfactory.boardtest.dto.board.BoardUpdateReq;
 import jjfactory.boardtest.dto.board.FindBoardRes;
-import jjfactory.boardtest.repository.board.BoardImageRepository;
-import jjfactory.boardtest.repository.board.BoardQueryRepository;
-import jjfactory.boardtest.repository.board.BoardRepository;
-import jjfactory.boardtest.repository.board.CategoryRepository;
+import jjfactory.boardtest.repository.board.*;
 import jjfactory.boardtest.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -35,6 +34,7 @@ public class BoardService {
     private final CategoryRepository categoryRepository;
     private final BoardQueryRepository boardQueryRepository;
     private final BoardImageRepository imageRepository;
+    private final BoardLikeRepository likeRepository;
     private final UserRepository userRepository;
     @Transactional(readOnly = true)
     public FindBoardRes findBoard(Long id){
@@ -79,7 +79,32 @@ public class BoardService {
         return "Y";
     }
 
-    public void updateTitle(Long id){
+    public String updateBoard(BoardUpdateReq dto, Long id){
+        Board board = boardRepository.findById(id).orElseThrow(() -> {
+            throw new NoSuchElementException("조회 실패");
+        });
 
+        board.updateBoard(dto.getTitle(), dto.getContent());
+        return "Y";
+    }
+
+    public String boardLike(User user,Long boardId){
+        Board board = boardRepository.findById(boardId).orElseThrow(() -> {
+            throw new NoSuchElementException("조회실패");
+        });
+        BoardLike like = BoardLike.createLike(user, board);
+        likeRepository.save(like);
+        board.addLikeCount();
+        return "Y";
+    }
+
+    public String boardDislike(User user,Long boardId){
+        Board board = boardRepository.findById(boardId).orElseThrow(() -> {
+            throw new NoSuchElementException("조회실패");
+        });
+        BoardLike like = BoardLike.createDislike(user, board);
+        likeRepository.save(like);
+        board.subtractLikeCount();
+        return "Y";
     }
 }
