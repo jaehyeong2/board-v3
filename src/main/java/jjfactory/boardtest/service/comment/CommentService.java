@@ -30,7 +30,10 @@ public class CommentService {
         Board board = boardRepository.findById(dto.getBoardId()).orElseThrow(() -> {
             throw new NoSuchElementException("조회실패");
         });
-        Comment.create(dto,user,board);
+        Comment comment = Comment.create(dto, user, board);
+        commentRepository.save(comment);
+
+        user.pointUp(1);
         return "Y";
     }
 

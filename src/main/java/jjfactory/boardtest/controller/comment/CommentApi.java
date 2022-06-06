@@ -1,5 +1,6 @@
 package jjfactory.boardtest.controller.comment;
 
+import jjfactory.boardtest.config.auth.PrincipalDetails;
 import jjfactory.boardtest.domain.user.User;
 import jjfactory.boardtest.dto.comment.CommentChangeDto;
 import jjfactory.boardtest.dto.comment.CommentDto;
@@ -17,8 +18,8 @@ public class CommentApi {
     private final CommentService commentService;
 
     @PostMapping("")
-    public ResponseEntity<String> createComment(@RequestBody CommentDto dto, @AuthenticationPrincipal User user){
-        return new ResponseEntity(commentService.createComment(dto,user), HttpStatus.OK);
+    public ResponseEntity<String> createComment(@RequestBody CommentDto dto, @AuthenticationPrincipal PrincipalDetails principal){
+        return new ResponseEntity(commentService.createComment(dto,principal.getUser()), HttpStatus.OK);
     }
 
 

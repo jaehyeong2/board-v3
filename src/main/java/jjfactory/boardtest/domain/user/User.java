@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -38,6 +39,8 @@ public class User extends BaseTimeEntity {
     private String email;
 
     private int warningCount;
+    private int activePoint;
+
 
     private Boolean activeState;
 
@@ -47,7 +50,7 @@ public class User extends BaseTimeEntity {
     protected User() {
     }
     @Builder
-    public User(String name, String username, String password, String phone, String email, Boolean activeState, Gender gender,int warningCount,List<String> roles) {
+    public User(String name, String username, String password, String phone, String email, Boolean activeState, Gender gender,int warningCount,List<String> roles,int activePoint) {
         this.name = name;
         this.username = username;
         this.password = password;
@@ -57,6 +60,7 @@ public class User extends BaseTimeEntity {
         this.roles = roles;
         this.gender = gender;
         this.warningCount = warningCount;
+        this.activePoint = activePoint;
     }
 
     public static User createUser(UserDto dto, String password){
@@ -70,10 +74,19 @@ public class User extends BaseTimeEntity {
                 .roles(Collections.singletonList("ROLE_USER"))
                 .gender(dto.getGender())
                 .activeState(true)
+                .activePoint(0)
                 .build();
     }
 
     public void withDraw(){
         this.activeState = false;
+    }
+
+    public void pointUp(int activePoint) {
+        this.activePoint += activePoint;
+    }
+
+    public void pointDown(int activePoint) {
+        this.activePoint -= activePoint;
     }
 }

@@ -15,8 +15,10 @@ public class HttpInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        log.info("[REQ] ---> [METHOD] {} | [URL] {} | [qs] {}",
-                request.getMethod(), request.getRequestURI(), request.getQueryString());
+        log.info("[REQ] ---> [METHOD] {} | [URL] {} | [qs] {} | [TOKEN] {} | reto {}",
+                request.getMethod(), request.getRequestURI(), request.getQueryString(),
+                request.getHeader(HttpHeaders.AUTHORIZATION),request.getHeader("Authorization: Bearer"));
+
         return HandlerInterceptor.super.preHandle(request, response, handler);
     }
 

@@ -19,8 +19,11 @@ public class Board extends BaseTimeEntity{
     @Id @GeneratedValue
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
     private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Category category;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "board")
     private List<BoardImage> imageList = new ArrayList<>();

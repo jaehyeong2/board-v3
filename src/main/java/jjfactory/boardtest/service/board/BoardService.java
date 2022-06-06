@@ -4,11 +4,14 @@ import jjfactory.boardtest.domain.board.Board;
 import jjfactory.boardtest.domain.user.User;
 import jjfactory.boardtest.dto.board.BoardDto;
 import jjfactory.boardtest.dto.board.FindBoardRes;
+import jjfactory.boardtest.repository.board.BoardImageRepository;
 import jjfactory.boardtest.repository.board.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 
 @RequiredArgsConstructor
@@ -16,6 +19,7 @@ import java.util.NoSuchElementException;
 @Service
 public class BoardService {
     private final BoardRepository boardRepository;
+    private final BoardImageRepository imageRepository;
 
     @Transactional(readOnly = true)
     public FindBoardRes findBoard(Long id){
@@ -25,9 +29,11 @@ public class BoardService {
         return new FindBoardRes(board);
     }
 
-    public String createBoard(BoardDto dto, User user){
+    public String createBoard(BoardDto dto, List<MultipartFile> images, User user){
+        user.pointUp(5);
         Board board = Board.createBoard(dto, user);
         boardRepository.save(board);
+
         return "y";
     }
 
