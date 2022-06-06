@@ -5,6 +5,9 @@ import jjfactory.boardtest.domain.comment.Comment;
 import jjfactory.boardtest.domain.user.User;
 import jjfactory.boardtest.dto.comment.CommentChangeDto;
 import jjfactory.boardtest.dto.comment.CommentDto;
+import jjfactory.boardtest.dto.comment.FindCommentRes;
+import jjfactory.boardtest.handler.ex.BusinessException;
+import jjfactory.boardtest.handler.ex.ErrorCode;
 import jjfactory.boardtest.repository.board.BoardRepository;
 import jjfactory.boardtest.repository.comment.CommentRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,10 +23,11 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final BoardRepository boardRepository;
 
-    public Comment findComment(Long id){
-        return commentRepository.findById(id).orElseThrow(() -> {
+    public FindCommentRes findComment(Long id){
+        Comment comment = commentRepository.findById(id).orElseThrow(() -> {
             throw new NoSuchElementException("조회실패");
         });
+        return new FindCommentRes(comment);
     }
 
     public String createComment(CommentDto dto, User user){
@@ -45,16 +49,17 @@ public class CommentService {
         return "Y";
     }
 
-    public String updateContent(CommentChangeDto dto){
-        Comment comment = getComment(dto);
+    public String updateContent(CommentChangeDto dto,Long commentId,User user){
+        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> {
+            throw new NoSuchElementException("조회 실패");
+        });
+
+        if(comment.getUser().equals(user)){
+            throw new BusinessException(ErrorCode.HANDLE_ACCESS_DENIED);
+        }
+
         comment.changeContent(dto.getContent());
         return "Y";
     }
 
-    private Comment getComment(CommentChangeDto dto) {
-        Comment comment = commentRepository.findById(dto.getCommentId()).orElseThrow(() -> {
-            throw new NoSuchElementException("조회실패");
-        });
-        return comment;
-    }
 }

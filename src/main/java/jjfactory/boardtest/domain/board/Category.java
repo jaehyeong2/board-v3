@@ -1,6 +1,7 @@
 package jjfactory.boardtest.domain.board;
 
 import jjfactory.boardtest.domain.BaseTimeEntity;
+import jjfactory.boardtest.dto.board.CategoryDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,9 +19,26 @@ public class Category extends BaseTimeEntity {
     private Long id;
 
     private String name;
+    private Boolean isView;
 
     @Builder
-    public Category(String name) {
+    public Category(String name, Boolean isView) {
+        this.name = name;
+        this.isView = isView;
+    }
+
+    public static Category create(CategoryDto dto) {
+        return builder()
+                .name(dto.getName())
+                .isView(true)
+                .build();
+    }
+
+    public void disabled() {
+        isView = false;
+    }
+
+    public void changeName(String name) {
         this.name = name;
     }
 }

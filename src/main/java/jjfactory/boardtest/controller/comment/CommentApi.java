@@ -2,8 +2,10 @@ package jjfactory.boardtest.controller.comment;
 
 import jjfactory.boardtest.config.auth.PrincipalDetails;
 import jjfactory.boardtest.domain.user.User;
+import jjfactory.boardtest.dto.ApiResponse;
 import jjfactory.boardtest.dto.comment.CommentChangeDto;
 import jjfactory.boardtest.dto.comment.CommentDto;
+import jjfactory.boardtest.dto.comment.FindCommentRes;
 import jjfactory.boardtest.service.comment.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,19 +19,26 @@ import org.springframework.web.bind.annotation.*;
 public class CommentApi {
     private final CommentService commentService;
 
+    @GetMapping("/{id}")
+    public ApiResponse<FindCommentRes> getComment(@PathVariable Long id){
+        return new ApiResponse<>(commentService.findComment(id));
+    }
+
     @PostMapping("")
-    public ResponseEntity<String> createComment(@RequestBody CommentDto dto, @AuthenticationPrincipal PrincipalDetails principal){
-        return new ResponseEntity(commentService.createComment(dto,principal.getUser()), HttpStatus.OK);
+    public ApiResponse<String> createComment(@RequestBody CommentDto dto, @AuthenticationPrincipal PrincipalDetails principal){
+        return new ApiResponse(commentService.createComment(dto,principal.getUser()));
     }
 
 
-    @DeleteMapping("")
-    public ResponseEntity<String> deleteComment(@PathVariable Long commentId){
-        return new ResponseEntity(commentService.deleteComment(commentId), HttpStatus.OK);
+    @DeleteMapping("/{commentId}")
+    public ApiResponse<String> deleteComment(@PathVariable Long commentId){
+        return new ApiResponse(commentService.deleteComment(commentId));
     }
 
-    @PatchMapping("")
-    public ResponseEntity<String> changeContent(@RequestBody CommentChangeDto dto){
-        return new ResponseEntity(commentService.updateContent(dto), HttpStatus.OK);
+    @PatchMapping("/{commentId}")
+    public ApiResponse<String> changeContent(@RequestBody CommentChangeDto dto,
+                                             @PathVariable Long commentId,
+                                             @AuthenticationPrincipal PrincipalDetails principal){
+        return new ApiResponse(commentService.updateContent(dto,commentId,principal.getUser()));
     }
 }

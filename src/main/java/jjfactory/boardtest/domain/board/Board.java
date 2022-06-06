@@ -7,6 +7,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Comment;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -28,12 +29,16 @@ public class Board extends BaseTimeEntity{
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "board")
     private List<BoardImage> imageList = new ArrayList<>();
 
+    @Comment("제목")
     @Column(length = 100)
     private String title;
+    @Comment("내용")
     private String content;
 
+    @Comment("활성화 여부: 활성화 / 숨김")
     private Boolean isView;
 
+    @Comment("좋아요 갯수")
     private int likeCount;
 
     @Builder

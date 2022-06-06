@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Comment;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class User extends BaseTimeEntity {
 
     @Column(length = 20)
     private String name;
+    @Comment(value = "아이디")
     @Column(length = 30)
     private String username;
 
@@ -38,12 +40,17 @@ public class User extends BaseTimeEntity {
     @Column(length = 30)
     private String email;
 
+    @Comment("누적 경고 횟수")
     private int warningCount;
+    
+    @Comment("활동 점수")
     private int activePoint;
 
 
+    @Comment("활동상태 : 활동 / 휴면")
     private Boolean activeState;
 
+    @Column(length = 20)
     @Enumerated(EnumType.STRING)
     private Gender gender;
 

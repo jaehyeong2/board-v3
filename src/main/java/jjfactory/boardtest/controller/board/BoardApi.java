@@ -1,11 +1,14 @@
 package jjfactory.boardtest.controller.board;
 
 import jjfactory.boardtest.config.auth.PrincipalDetails;
+import jjfactory.boardtest.dto.ApiPagingResponse;
 import jjfactory.boardtest.dto.ApiResponse;
 import jjfactory.boardtest.dto.board.BoardDto;
+import jjfactory.boardtest.dto.board.BoardResponse;
 import jjfactory.boardtest.dto.board.FindBoardRes;
 import jjfactory.boardtest.service.board.BoardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,9 +26,15 @@ public class BoardApi {
         return new ApiResponse<>(boardService.findBoard(boardId));
     }
 
+    @GetMapping("")
+    public ApiPagingResponse<BoardResponse> findBoards(@RequestParam(defaultValue = "1", required = false, name = "page") int page,
+                                                       @RequestParam(required = false) String query){
+        return new ApiPagingResponse<>(boardService.findBoards(page));
+    }
+
     @PostMapping("")
     public ApiResponse<String> createBoard(@RequestBody BoardDto dto,
-                                           @RequestParam List<MultipartFile> images,
+                                           @RequestParam(required = false) List<MultipartFile> images,
                                            @AuthenticationPrincipal PrincipalDetails principal){
         return new ApiResponse<>(boardService.createBoard(dto,images,principal.getUser()));
     }

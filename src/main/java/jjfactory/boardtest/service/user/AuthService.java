@@ -29,12 +29,19 @@ public class AuthService {
     private final TokenProvider tokenProvider;
 
     public String signUp(UserDto userDto){
+        usernameDuplicateCheck(userDto);
         String rawPassword = userDto.getPassword();
         String encPassword = encoder.encode(rawPassword);
 
         User user = User.createUser(userDto,encPassword);
         userRepository.save(user);
         return "Y";
+    }
+
+    private void usernameDuplicateCheck(UserDto userDto) {
+        if(userRepository.findByUsername(userDto.getUsername()) != null){
+            throw new BusinessException(ErrorCode.DUPLICATE_LOGIN_ID);
+        }
     }
 
     public TokenAndUserRes login(LoginDto dto){
