@@ -92,9 +92,12 @@ public class BoardService {
         Board board = boardRepository.findById(boardId).orElseThrow(() -> {
             throw new NoSuchElementException("조회실패");
         });
+
         BoardLike like = BoardLike.createLike(user, board);
         likeRepository.save(like);
         board.addLikeCount();
+        User writer = board.getUser();
+        writer.pointUp(5);
         return "Y";
     }
 
@@ -102,9 +105,12 @@ public class BoardService {
         Board board = boardRepository.findById(boardId).orElseThrow(() -> {
             throw new NoSuchElementException("조회실패");
         });
+
         BoardLike like = BoardLike.createDislike(user, board);
         likeRepository.save(like);
         board.subtractLikeCount();
+        User writer = board.getUser();
+        writer.pointDown(5);
         return "Y";
     }
 }
