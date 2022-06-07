@@ -14,7 +14,6 @@ import jjfactory.boardtest.repository.board.*;
 import jjfactory.boardtest.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Transactional
@@ -45,9 +43,9 @@ public class BoardService {
         return new FindBoardRes(board);
     }
     @Transactional(readOnly = true)
-    public PagingResponse<BoardResponse> findBoards(int page){
+    public PagingResponse<BoardResponse> findBoards(int page,String query){
         Pageable pageRequest = new MyPageRequest(page,10).of();
-        Page<BoardResponse> boards = boardQueryRepository.findAll(pageRequest);
+        Page<BoardResponse> boards = boardQueryRepository.findBoards(pageRequest);
         return new PagingResponse<>(boards);
     }
 

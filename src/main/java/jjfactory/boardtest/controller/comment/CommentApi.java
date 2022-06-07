@@ -2,9 +2,11 @@ package jjfactory.boardtest.controller.comment;
 
 import jjfactory.boardtest.config.auth.PrincipalDetails;
 import jjfactory.boardtest.domain.user.User;
+import jjfactory.boardtest.dto.ApiPagingResponse;
 import jjfactory.boardtest.dto.ApiResponse;
 import jjfactory.boardtest.dto.comment.CommentChangeDto;
 import jjfactory.boardtest.dto.comment.CommentDto;
+import jjfactory.boardtest.dto.comment.CommentResponse;
 import jjfactory.boardtest.dto.comment.FindCommentRes;
 import jjfactory.boardtest.service.comment.CommentService;
 import lombok.RequiredArgsConstructor;

@@ -7,7 +7,9 @@ import jjfactory.boardtest.dto.board.BoardDto;
 import jjfactory.boardtest.dto.board.BoardResponse;
 import jjfactory.boardtest.dto.board.BoardUpdateReq;
 import jjfactory.boardtest.dto.board.FindBoardRes;
+import jjfactory.boardtest.dto.comment.CommentResponse;
 import jjfactory.boardtest.service.board.BoardService;
+import jjfactory.boardtest.service.comment.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,16 +23,24 @@ import java.util.List;
 @RestController
 public class BoardApi {
     private final BoardService boardService;
+    private final CommentService commentService;
 
     @GetMapping("/{boardId}")
-    public ApiResponse<FindBoardRes> findBoard(@PathVariable Long boardId){
+    public ApiResponse<FindBoardRes> getBoard(@PathVariable Long boardId){
         return new ApiResponse<>(boardService.findBoard(boardId));
     }
 
     @GetMapping("")
-    public ApiPagingResponse<BoardResponse> findBoards(@RequestParam(defaultValue = "1", required = false, name = "page") int page,
+    public ApiPagingResponse<BoardResponse> getBoards(@RequestParam(defaultValue = "1", required = false, name = "page") int page,
                                                        @RequestParam(required = false) String query){
-        return new ApiPagingResponse<>(boardService.findBoards(page));
+        return new ApiPagingResponse<>(boardService.findBoards(page,query));
+    }
+
+    @GetMapping("/{boardId}/comments")
+    public ApiPagingResponse<CommentResponse> getCommentsByBoardId(@RequestParam(required = false, defaultValue = "1") int page,
+                                                                   @RequestParam(required = false) String query,
+                                                                   @PathVariable Long boardId){
+        return new ApiPagingResponse<>(commentService.findCommentsByBoardId(page,boardId));
     }
 
     @PostMapping("")

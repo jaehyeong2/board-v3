@@ -1,8 +1,8 @@
-package jjfactory.boardtest.repository.board;
+package jjfactory.boardtest.repository.comment;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import jjfactory.boardtest.dto.board.BoardResponse;
+import jjfactory.boardtest.dto.comment.CommentResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -11,17 +11,18 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static jjfactory.boardtest.domain.board.QBoard.board;
+import static jjfactory.boardtest.domain.comment.QComment.comment;
 
 @RequiredArgsConstructor
 @Repository
-public class BoardQueryRepository {
+public class CommentQueryRepository {
     private final JPAQueryFactory queryFactory;
 
-    public Page<BoardResponse> findBoards(Pageable pageable){
-        List<BoardResponse> results = queryFactory.select(Projections.constructor(BoardResponse.class,board))
-                .from(board)
-                .orderBy(board.createDate.desc())
+    public Page<CommentResponse> findComments(Pageable pageable,Long boardId){
+        List<CommentResponse> results = queryFactory.select(Projections.constructor(CommentResponse.class, comment))
+                .from(comment)
+                .where(comment.board.id.eq(boardId))
+                .orderBy(comment.createDate.desc())
                 .limit(pageable.getPageSize())
                 .offset(pageable.getOffset())
                 .fetch();

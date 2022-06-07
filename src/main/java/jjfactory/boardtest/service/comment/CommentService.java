@@ -4,15 +4,21 @@ import jjfactory.boardtest.domain.board.Board;
 import jjfactory.boardtest.domain.comment.Comment;
 import jjfactory.boardtest.domain.comment.CommentLike;
 import jjfactory.boardtest.domain.user.User;
+import jjfactory.boardtest.dto.MyPageRequest;
+import jjfactory.boardtest.dto.PagingResponse;
 import jjfactory.boardtest.dto.comment.CommentChangeDto;
 import jjfactory.boardtest.dto.comment.CommentDto;
+import jjfactory.boardtest.dto.comment.CommentResponse;
 import jjfactory.boardtest.dto.comment.FindCommentRes;
 import jjfactory.boardtest.handler.ex.BusinessException;
 import jjfactory.boardtest.handler.ex.ErrorCode;
 import jjfactory.boardtest.repository.board.BoardRepository;
 import jjfactory.boardtest.repository.comment.CommentLikeRepository;
+import jjfactory.boardtest.repository.comment.CommentQueryRepository;
 import jjfactory.boardtest.repository.comment.CommentRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,14 +31,23 @@ public class CommentService {
 
     private final int LIKE_POINT = 1;
     private final CommentRepository commentRepository;
+    private final CommentQueryRepository commentQueryRepository;
     private final CommentLikeRepository likeRepository;
     private final BoardRepository boardRepository;
 
+    @Transactional(readOnly = true)
     public FindCommentRes findComment(Long id){
         Comment comment = commentRepository.findById(id).orElseThrow(() -> {
             throw new NoSuchElementException("조회실패");
         });
         return new FindCommentRes(comment);
+    }
+
+    @Transactional(readOnly = true)
+    public PagingResponse<CommentResponse> findCommentsByBoardId(int page,Long boardId){
+        Pageable pageRequest = new MyPageRequest(page,10).of();
+        Page<CommentResponse> comments = commentQueryRepository.findComments(pageRequest,boardId);
+        return new PagingResponse<>(comments);
     }
 
     public String createComment(CommentDto dto, User user){
