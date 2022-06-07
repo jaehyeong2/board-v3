@@ -29,7 +29,8 @@ import java.util.stream.Collectors;
 @Service
 public class BoardService {
 
-    private final int BOARD_WRITE_POINT = 5;
+    private final int BOARD_WRITE_POINT = 3;
+    private final int LIKE_POINT = 3;
     private final BoardRepository boardRepository;
     private final CategoryRepository categoryRepository;
     private final BoardQueryRepository boardQueryRepository;
@@ -97,7 +98,7 @@ public class BoardService {
         likeRepository.save(like);
         board.addLikeCount();
         User writer = board.getUser();
-        writer.pointUp(5);
+        writer.pointUp(LIKE_POINT);
         return "Y";
     }
 
@@ -110,7 +111,7 @@ public class BoardService {
         likeRepository.save(like);
         board.subtractLikeCount();
         User writer = board.getUser();
-        writer.pointDown(5);
+        writer.pointDown(LIKE_POINT);
         return "Y";
     }
 }

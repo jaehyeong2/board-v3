@@ -29,7 +29,6 @@ public class CommentApi {
         return new ApiResponse(commentService.createComment(dto,principal.getUser()));
     }
 
-
     @DeleteMapping("/{commentId}")
     public ApiResponse<String> deleteComment(@PathVariable Long commentId){
         return new ApiResponse(commentService.deleteComment(commentId));
@@ -40,5 +39,17 @@ public class CommentApi {
                                              @PathVariable Long commentId,
                                              @AuthenticationPrincipal PrincipalDetails principal){
         return new ApiResponse(commentService.updateContent(dto,commentId,principal.getUser()));
+    }
+
+    @PostMapping("/{commentId}/like")
+    public ApiResponse<String> likeBoard(@PathVariable Long commentId,
+                                         @AuthenticationPrincipal PrincipalDetails principal){
+        return new ApiResponse<>(commentService.commentLike(principal.getUser(),commentId));
+    }
+
+    @PostMapping("/{commentId}/dislike")
+    public ApiResponse<String> dislikeBoard(@PathVariable Long commentId,
+                                            @AuthenticationPrincipal PrincipalDetails principal){
+        return new ApiResponse<>(commentService.commentDislike(principal.getUser(),commentId));
     }
 }
