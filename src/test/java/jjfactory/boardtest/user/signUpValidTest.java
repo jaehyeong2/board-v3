@@ -1,12 +1,11 @@
 package jjfactory.boardtest.user;
 
 
-import jjfactory.boardtest.handler.ex.BusinessException;
-import jjfactory.boardtest.handler.ex.ErrorCode;
+import jjfactory.boardtest.global.handler.ex.BusinessException;
+import jjfactory.boardtest.global.handler.ex.ErrorCode;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
 
 public class signUpValidTest {
 
