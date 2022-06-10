@@ -1,9 +1,11 @@
 package jjfactory.boardtest.business.controller.notice;
 
-import jjfactory.boardtest.business.dto.notice.NoticeContentChangeReq;
-import jjfactory.boardtest.business.dto.notice.NoticeDto;
-import jjfactory.boardtest.business.dto.notice.NoticeTitleChangeReq;
+import jjfactory.boardtest.business.dto.notice.req.NoticeContentChangeReq;
+import jjfactory.boardtest.business.dto.notice.req.NoticeDto;
+import jjfactory.boardtest.business.dto.notice.req.NoticeTitleChangeReq;
+import jjfactory.boardtest.business.dto.notice.res.NoticeResponse;
 import jjfactory.boardtest.business.service.notice.NoticeService;
+import jjfactory.boardtest.global.dto.ApiPagingResponse;
 import jjfactory.boardtest.global.dto.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +19,11 @@ public class NoticeApi {
     @GetMapping("/{id}")
     public ApiResponse<NoticeDto> findNotice(@PathVariable Long id){
         return new ApiResponse<>(noticeService.findNoticeById(id));
+    }
+
+    @GetMapping("")
+    public ApiPagingResponse<NoticeResponse> findNotices(@RequestParam(defaultValue = "1", required = false, name = "page") int page){
+        return new ApiPagingResponse<>(noticeService.findNotice(page));
     }
 
     @PostMapping("/")

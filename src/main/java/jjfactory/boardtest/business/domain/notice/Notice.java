@@ -1,7 +1,7 @@
 package jjfactory.boardtest.business.domain.notice;
 
 import jjfactory.boardtest.business.domain.BaseTimeEntity;
-import jjfactory.boardtest.business.dto.notice.NoticeDto;
+import jjfactory.boardtest.business.dto.notice.req.NoticeDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

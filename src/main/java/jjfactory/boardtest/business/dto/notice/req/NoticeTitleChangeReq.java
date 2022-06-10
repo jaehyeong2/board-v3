@@ -1,4 +1,4 @@
-package jjfactory.boardtest.business.dto.notice;
+package jjfactory.boardtest.business.dto.notice.req;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
