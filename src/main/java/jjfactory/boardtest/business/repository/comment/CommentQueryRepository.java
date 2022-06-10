@@ -29,4 +29,15 @@ public class CommentQueryRepository {
 
         return new PageImpl<>(results,pageable, results.size());
     }
+
+    // 대댓글 기능 구현
+    public List<CommentResponse> findComments(Long boardId){
+        return queryFactory.select(Projections.constructor(CommentResponse.class,comment))
+                .from(comment)
+                .leftJoin(comment.parent)
+                .fetchJoin()
+                .where(comment.board.id.eq(boardId)) // nulls first => 부모 없는게 최상위
+                .orderBy(comment.parent.id.asc().nullsFirst(), comment.createDate.asc())
+                .fetch();
+    }
 }

@@ -10,6 +10,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
@@ -28,7 +30,17 @@ public class Comment extends BaseTimeEntity {
 
     private Boolean isView;
 
+    @Enumerated(EnumType.STRING)
+    private DeleteStatus isDeleted;
+
     private int likeCount;
+
+    @JoinColumn(name = "parent_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Comment parent;
+
+    @OneToMany(mappedBy = "parent", orphanRemoval = true)
+    private List<Comment> children = new ArrayList<>();
 
     @Builder
     public Comment(User user, Board board, String content, Boolean isView,int likeCount) {
