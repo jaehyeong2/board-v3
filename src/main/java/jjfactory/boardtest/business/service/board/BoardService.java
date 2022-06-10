@@ -39,9 +39,8 @@ public class BoardService {
     private final UserRepository userRepository;
     @Transactional(readOnly = true)
     public FindBoardRes findBoard(Long id){
-        Board board = boardRepository.findById(id).orElseThrow(() -> {
-            throw new NoSuchElementException("조회 실패");
-        });
+        Board board = getBoard(id);
+        board.viewCountUp();
         return new FindBoardRes(board);
     }
     @Transactional(readOnly = true)
@@ -79,18 +78,13 @@ public class BoardService {
     }
 
     public String deleteBoard(Long id){
-        Board board = boardRepository.findById(id).orElseThrow(() -> {
-            throw new NoSuchElementException("조회 실패");
-        });
-
+        Board board = getBoard(id);
         board.deleteBoard();
         return "Y";
     }
 
     public String updateBoard(BoardUpdateReq dto, Long id){
-        Board board = boardRepository.findById(id).orElseThrow(() -> {
-            throw new NoSuchElementException("조회 실패");
-        });
+        Board board = getBoard(id);
 
         board.updateBoard(dto.getTitle(), dto.getContent());
         return "Y";
@@ -120,5 +114,12 @@ public class BoardService {
         User writer = board.getUser();
         writer.pointDown(LIKE_POINT);
         return "Y";
+    }
+
+    private Board getBoard(Long id) {
+        Board board = boardRepository.findById(id).orElseThrow(() -> {
+            throw new NoSuchElementException("조회 실패");
+        });
+        return board;
     }
 }

@@ -38,11 +38,14 @@ public class Board extends BaseTimeEntity {
     @Comment("활성화 여부: 활성화 / 숨김")
     private Boolean isView;
 
+    @Comment("조회수")
+    private int viewCount;
+
     @Comment("좋아요 갯수")
     private int likeCount;
 
     @Builder
-    public Board(User user, Category category, List<BoardImage> imageList, String title, String content, Boolean isView, int likeCount) {
+    public Board(User user, Category category, List<BoardImage> imageList, String title, String content, Boolean isView,int viewCount, int likeCount) {
         this.user = user;
         this.category = category;
         this.imageList = imageList;
@@ -50,6 +53,7 @@ public class Board extends BaseTimeEntity {
         this.content = content;
         this.isView = isView;
         this.likeCount = likeCount;
+        this.viewCount = viewCount;
     }
 
     public static Board createBoard(BoardDto dto, User user, Category category){
@@ -59,6 +63,7 @@ public class Board extends BaseTimeEntity {
                 .user(user)
                 .category(category)
                 .likeCount(0)
+                .viewCount(0)
                 .isView(true)
                 .build();
     }
@@ -82,5 +87,9 @@ public class Board extends BaseTimeEntity {
 
     public void subtractLikeCount() {
         this.likeCount -= 1;
+    }
+
+    public void viewCountUp() {
+        this.viewCount += 1;
     }
 }
