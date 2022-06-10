@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.NoSuchElementException;
 
-import static jjfactory.boardtest.domain.user.QUser.user;
+import static jjfactory.boardtest.business.domain.user.QUser.user;
 
 
 @RequiredArgsConstructor

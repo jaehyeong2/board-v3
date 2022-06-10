@@ -12,7 +12,7 @@ import jjfactory.boardtest.business.dto.board.BoardDto;
 import jjfactory.boardtest.business.dto.board.BoardResponse;
 import jjfactory.boardtest.business.dto.board.BoardUpdateReq;
 import jjfactory.boardtest.business.dto.board.FindBoardRes;
-import jjfactory.boardtest.repository.board.*;
+//import jjfactory.boardtest.repository.board.*;
 import jjfactory.boardtest.business.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

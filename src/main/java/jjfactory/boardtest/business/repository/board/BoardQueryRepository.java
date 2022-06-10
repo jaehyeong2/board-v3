@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static jjfactory.boardtest.domain.board.QBoard.board;
+import static jjfactory.boardtest.business.domain.board.QBoard.board;
 
 @RequiredArgsConstructor
 @Repository

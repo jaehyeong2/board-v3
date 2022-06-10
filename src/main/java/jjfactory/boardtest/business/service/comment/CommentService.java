@@ -4,6 +4,7 @@ import jjfactory.boardtest.business.domain.board.Board;
 import jjfactory.boardtest.business.domain.comment.Comment;
 import jjfactory.boardtest.business.domain.comment.CommentLike;
 import jjfactory.boardtest.business.domain.user.User;
+import jjfactory.boardtest.business.repository.comment.CommentQueryRepository;
 import jjfactory.boardtest.global.dto.MyPageRequest;
 import jjfactory.boardtest.global.dto.PagingResponse;
 import jjfactory.boardtest.business.dto.comment.CommentChangeDto;
@@ -14,7 +15,6 @@ import jjfactory.boardtest.global.handler.ex.BusinessException;
 import jjfactory.boardtest.global.handler.ex.ErrorCode;
 import jjfactory.boardtest.business.repository.board.BoardRepository;
 import jjfactory.boardtest.business.repository.comment.CommentLikeRepository;
-import jjfactory.boardtest.business.repository.comment.CommentQueryRepository;
 import jjfactory.boardtest.business.repository.comment.CommentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -37,9 +37,7 @@ public class CommentService {
 
     @Transactional(readOnly = true)
     public FindCommentRes findComment(Long id){
-        Comment comment = commentRepository.findById(id).orElseThrow(() -> {
-            throw new NoSuchElementException("조회실패");
-        });
+        Comment comment = getComment(id);
         return new FindCommentRes(comment);
     }
 
@@ -62,17 +60,13 @@ public class CommentService {
     }
 
     public String deleteComment(Long id){
-        Comment comment = commentRepository.findById(id).orElseThrow(() -> {
-            throw new NoSuchElementException("조회실패");
-        });
+        Comment comment = getComment(id);
         comment.deleteComment();
         return "Y";
     }
 
     public String updateContent(CommentChangeDto dto,Long commentId,User user){
-        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> {
-            throw new NoSuchElementException("조회 실패");
-        });
+        Comment comment = getComment(commentId);
 
         if(comment.getUser().equals(user)){
             throw new BusinessException(ErrorCode.HANDLE_ACCESS_DENIED);
@@ -83,9 +77,7 @@ public class CommentService {
     }
 
     public String commentLike(User user,Long commentId){
-        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> {
-            throw new NoSuchElementException("조회 실패");
-        });
+        Comment comment = getComment(commentId);
         comment.getUser().getId();
         CommentLike like = CommentLike.createLike(user, comment);
         User commentWriter = comment.getUser();
@@ -102,9 +94,7 @@ public class CommentService {
     }
 
     public String commentDislike(User user,Long commentId){
-        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> {
-            throw new NoSuchElementException("조회 실패");
-        });
+        Comment comment = getComment(commentId);
         CommentLike dislike = CommentLike.createDislike(user, comment);
 
         User commentWriter = comment.getUser();
@@ -118,6 +108,13 @@ public class CommentService {
         }
 
         return "Y";
+    }
+
+    private Comment getComment(Long commentId) {
+        Comment comment = commentRepository.findById(commentId).orElseThrow(() -> {
+            throw new NoSuchElementException("조회_실패");
+        });
+        return comment;
     }
 
 }

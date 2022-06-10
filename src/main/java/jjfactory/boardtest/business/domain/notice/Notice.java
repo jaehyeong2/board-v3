@@ -25,20 +25,36 @@ public class Notice extends BaseTimeEntity {
     private String title;
     private String content;
 
+    private Boolean isView;
+
     @Builder
-    public Notice(String title, String content) {
+    public Notice(String title, String content,Boolean isView) {
         this.title = title;
         this.content = content;
+        this.isView = isView;
     }
 
     public static Notice create(NoticeDto dto){
         return builder()
                 .title(dto.getTitle())
                 .content(dto.getContent())
+                .isView(true)
                 .build();
     }
 
     public void addImage(NoticeImage image){
         this.imageList.add(image);
+    }
+
+    public void delete() {
+        isView = false;
+    }
+
+    public void changeTitle(String title) {
+        this.title = title;
+    }
+
+    public void changeContent(String content) {
+        this.content = content;
     }
 }

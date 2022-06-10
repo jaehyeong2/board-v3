@@ -1,0 +1,18 @@
+spring:
+  jwt:
+    secret: jjfactory
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3306/boardV3?serverTimezone=Asia/Seoul
+    username: root
+    password: 1234
+
+  jpa:
+    open-in-view: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
