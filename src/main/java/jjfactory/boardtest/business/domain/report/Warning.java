@@ -42,4 +42,8 @@ public class Warning extends BaseTimeEntity {
                 .code(dto.getCode())
                 .build();
     }
+
+    public void changeCode(WarningCode code) {
+        this.code = code;
+    }
 }

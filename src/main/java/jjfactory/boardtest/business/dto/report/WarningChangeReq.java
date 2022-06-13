@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class WarningDto {
-    private Long adminId;
-    private Long userId;
+public class WarningChangeReq {
     private WarningCode code;
 }

@@ -47,4 +47,8 @@ public class Report extends BaseTimeEntity {
                 .reason(dto.getReportReason())
                 .build();
     }
+
+    public void changeReportReason(ReportReason reason) {
+        this.reason = reason;
+    }
 }

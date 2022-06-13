@@ -1,6 +1,6 @@
 package jjfactory.boardtest.business.dto.report;
 
-import jjfactory.boardtest.business.domain.report.WarningCode;
+import jjfactory.boardtest.business.domain.report.ReportReason;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,8 +8,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class WarningDto {
-    private Long adminId;
-    private Long userId;
-    private WarningCode code;
+public class ReportChangeReq {
+    private ReportReason reason;
 }
