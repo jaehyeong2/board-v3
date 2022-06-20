@@ -31,7 +31,6 @@ import java.io.PrintWriter;
 @RequiredArgsConstructor
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
     private final TokenProvider tokenProvider;
     private final ExceptionFilter exceptionFilter;
 
@@ -48,18 +47,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-            http.csrf().disable();
-//                .httpBasic().disable()
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and().authorizeRequests()
-//                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()//이거없으면 큰일남
-//                .antMatchers("/**").permitAll()
-//                .and()
-//                .exceptionHandling().accessDeniedHandler(accessDeniedHandler())
-//                .authenticationEntryPoint(authenticationEntryPoint())
-//                .and().
-//                addFilterBefore(new TokenFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class).
-//                addFilterBefore(exceptionFilter,TokenFilter.class);
+            http.csrf().disable()
+                .httpBasic().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().authorizeRequests()
+                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()//이거없으면 큰일남
+                .antMatchers("/**").permitAll()
+                .and()
+                .exceptionHandling().accessDeniedHandler(accessDeniedHandler())
+                .authenticationEntryPoint(authenticationEntryPoint())
+                .and().
+                addFilterBefore(new TokenFilter(tokenProvider), UsernamePasswordAuthenticationFilter.class).
+                addFilterBefore(exceptionFilter,TokenFilter.class);
     }
 
     private AccessDeniedHandler accessDeniedHandler() {

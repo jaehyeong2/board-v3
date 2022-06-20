@@ -46,7 +46,14 @@ public class BoardService {
     @Transactional(readOnly = true)
     public PagingResponse<BoardResponse> findBoards(int page,String query){
         Pageable pageRequest = new MyPageRequest(page,10).of();
-        Page<BoardResponse> boards = boardQueryRepository.findBoards(pageRequest);
+        Page<BoardResponse> boards = boardQueryRepository.findAllBoards(pageRequest);
+        return new PagingResponse<>(boards);
+    }
+
+    @Transactional(readOnly = true)
+    public PagingResponse<BoardResponse> findBoardsByCategoryId(int page,String query,Long categoryId){
+        Pageable pageRequest = new MyPageRequest(page,10).of();
+        Page<BoardResponse> boards = boardQueryRepository.findBoardsByCategory(pageRequest,categoryId);
         return new PagingResponse<>(boards);
     }
 

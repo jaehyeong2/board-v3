@@ -31,14 +31,21 @@ public class BoardApi {
 
     @GetMapping("")
     public ApiPagingResponse<BoardResponse> getBoards(@RequestParam(defaultValue = "1", required = false, name = "page") int page,
-                                                       @RequestParam(required = false) String query){
+                                                      @RequestParam(required = false) String query){
         return new ApiPagingResponse<>(boardService.findBoards(page,query));
+    }
+
+    @GetMapping("/category/{categoryId}")
+    public ApiPagingResponse<BoardResponse> getBoardsByCategory(@RequestParam(defaultValue = "1", required = false, name = "page") int page,
+                                                                @RequestParam(required = false) String query,
+                                                                @PathVariable Long categoryId){
+        return new ApiPagingResponse<>(boardService.findBoardsByCategoryId(page,query,categoryId));
     }
 
     @GetMapping("/{boardId}/comments")
     public ApiPagingResponse<CommentResponse> getCommentsByBoardId(@RequestParam(required = false, defaultValue = "1") int page,
                                                                    @RequestParam(required = false) String query,
-                                                                   @PathVariable Long boardId){
+                                                                   @RequestParam(required = false) Long boardId){
         return new ApiPagingResponse<>(commentService.findCommentsByBoardId(page,boardId));
     }
 

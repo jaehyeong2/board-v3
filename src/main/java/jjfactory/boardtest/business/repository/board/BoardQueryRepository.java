@@ -18,9 +18,21 @@ import static jjfactory.boardtest.business.domain.board.QBoard.board;
 public class BoardQueryRepository {
     private final JPAQueryFactory queryFactory;
 
-    public Page<BoardResponse> findBoards(Pageable pageable){
+    public Page<BoardResponse> findAllBoards(Pageable pageable){
         List<BoardResponse> results = queryFactory.select(Projections.constructor(BoardResponse.class,board))
                 .from(board)
+                .orderBy(board.createDate.desc())
+                .limit(pageable.getPageSize())
+                .offset(pageable.getOffset())
+                .fetch();
+
+        return new PageImpl<>(results,pageable, results.size());
+    }
+
+    public Page<BoardResponse> findBoardsByCategory(Pageable pageable, Long categoryId){
+        List<BoardResponse> results = queryFactory.select(Projections.constructor(BoardResponse.class,board))
+                .from(board)
+                .where(board.category.id.eq(categoryId))
                 .orderBy(board.createDate.desc())
                 .limit(pageable.getPageSize())
                 .offset(pageable.getOffset())

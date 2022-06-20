@@ -33,7 +33,7 @@ public class User extends BaseTimeEntity {
     @Column(length = 20)
     private String phone;
 
-    @ElementCollection(fetch = FetchType.LAZY)
+    @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     private List<Role> roles = new ArrayList<>();
 
