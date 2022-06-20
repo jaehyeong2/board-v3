@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class BoardController {
 
-//    @GetMapping(value = {"/","/boards"})
-//    public String home(){
-//        return "home";
-//    }
+    @GetMapping(value = "/boards/test")
+    public String boards(){
+        return "board/list";
+    }
 }

@@ -1,6 +1,7 @@
 package jjfactory.boardtest.business.dto.user;
 
 import jjfactory.boardtest.business.domain.user.Gender;
+import jjfactory.boardtest.business.domain.user.Role;
 import jjfactory.boardtest.business.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,7 +19,7 @@ public class UserDto {
     private String email;
     private Gender gender;
     private String phone;
-    private List<String> roles;
+    private List<Role> roles;
 
     public UserDto(User user) {
         this.name = name;

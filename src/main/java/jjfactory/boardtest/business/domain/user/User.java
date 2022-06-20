@@ -2,8 +2,10 @@ package jjfactory.boardtest.business.domain.user;
 
 import jjfactory.boardtest.business.domain.BaseTimeEntity;
 import jjfactory.boardtest.business.dto.user.UserDto;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Comment;
 
 import javax.persistence.*;
@@ -12,6 +14,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Inheritance(strategy = InheritanceType.JOINED)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
 public class User extends BaseTimeEntity {
@@ -30,9 +33,9 @@ public class User extends BaseTimeEntity {
     @Column(length = 20)
     private String phone;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @Builder.Default
-    private List<String> roles = new ArrayList<>();
+    @ElementCollection(fetch = FetchType.LAZY)
+    @Enumerated(EnumType.STRING)
+    private List<Role> roles = new ArrayList<>();
 
     @Column(length = 30)
     private String email;
@@ -51,20 +54,18 @@ public class User extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    protected User() {
-    }
     @Builder
-    public User(String name, String username, String password, String phone, String email, Boolean activeState, Gender gender,int warningCount,List<String> roles,int activePoint) {
+    public User(String name, String username, String password, String phone, List<Role> roles, String email, int warningCount, int activePoint, Boolean activeState, Gender gender) {
         this.name = name;
         this.username = username;
         this.password = password;
         this.phone = phone;
-        this.email = email;
-        this.activeState = activeState;
         this.roles = roles;
-        this.gender = gender;
+        this.email = email;
         this.warningCount = warningCount;
         this.activePoint = activePoint;
+        this.activeState = activeState;
+        this.gender = gender;
     }
 
     public static User createUser(UserDto dto, String password){
@@ -75,7 +76,7 @@ public class User extends BaseTimeEntity {
                 .phone(dto.getPhone())
                 .email(dto.getEmail())
                 .warningCount(0)
-                .roles(Collections.singletonList("ROLE_USER"))
+                .roles(Collections.singletonList(Role.ROLE_USER))
                 .gender(dto.getGender())
                 .activeState(true)
                 .activePoint(0)
