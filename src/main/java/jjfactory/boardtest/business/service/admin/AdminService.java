@@ -15,8 +15,8 @@ public class AdminService {
     private final AdminRepository adminRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public String create(AdminCreateDto dto){
-        Admin admin = Admin.enrollAdmin(dto);
+    public String registerAdmin(AdminCreateDto dto){
+        Admin admin = Admin.registerAdmin(dto);
         adminRepository.save(admin);
         return "y";
     }

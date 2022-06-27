@@ -12,4 +12,5 @@ public class AdminCreateDto {
     private String adminPhone;
     private String adminName;
     private String adminEmail;
+    private String password;
 }

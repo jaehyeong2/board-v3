@@ -132,7 +132,7 @@ public class BoardServiceTest {
         PagingResponse<BoardResponse> result = boardService.findBoards(1, null);
         PagingResponse<BoardResponse> result2 = boardService.findBoards(2, null);
 
-        assertThat(result.getTotalCount()).isEqualTo(10);
+        assertThat(result.getTotalCount()).isEqualTo(7);
         assertThat(result2.getTotalCount()).isEqualTo(0);
     }
 }
