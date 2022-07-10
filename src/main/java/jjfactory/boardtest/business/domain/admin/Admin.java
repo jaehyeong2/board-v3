@@ -37,7 +37,7 @@ public class Admin extends User{
         this.adminEmail = adminEmail;
     }
 
-    public static Admin enrollAdmin(AdminCreateDto dto){
+    public static Admin registerAdmin(AdminCreateDto dto){
         return AdminBuilder()
                 .roles(Collections.singletonList(Role.ROLE_ADMIN))
                 .adminPhone(dto.getAdminPhone())
