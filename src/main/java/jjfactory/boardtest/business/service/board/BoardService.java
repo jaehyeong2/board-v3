@@ -11,7 +11,7 @@ import jjfactory.boardtest.global.dto.PagingResponse;
 import jjfactory.boardtest.business.dto.board.BoardDto;
 import jjfactory.boardtest.business.dto.board.BoardResponse;
 import jjfactory.boardtest.business.dto.board.BoardUpdateReq;
-import jjfactory.boardtest.business.dto.board.FindBoardRes;
+import jjfactory.boardtest.business.dto.board.BoardDetailRes;
 //import jjfactory.boardtest.repository.board.*;
 import jjfactory.boardtest.business.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -38,10 +38,10 @@ public class BoardService {
     private final BoardLikeRepository likeRepository;
     private final UserRepository userRepository;
     @Transactional(readOnly = true)
-    public FindBoardRes findBoard(Long id){
+    public BoardDetailRes findBoard(Long id){
         Board board = getBoard(id);
         board.viewCountUp();
-        return new FindBoardRes(board);
+        return new BoardDetailRes(board);
     }
     @Transactional(readOnly = true)
     public PagingResponse<BoardResponse> findBoards(int page,String query){

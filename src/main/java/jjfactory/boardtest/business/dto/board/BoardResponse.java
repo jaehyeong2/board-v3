@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,7 +29,7 @@ public class BoardResponse {
         this.categoryId = board.getCategory().getId();
         this.isView = board.getIsView();
         this.likeCount = board.getLikeCount();
-        this.createDate = board.getCreateDate().toString();
+        this.createDate = board.getCreateDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         this.userName = board.getUser().getName();
     }
 }

@@ -8,11 +8,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class FindBoardRes {
+public class BoardDetailRes {
+
+    private Long boardId;
+
+    private String userName;
     private String title;
     private String content;
 
-    public FindBoardRes(Board board) {
+    public BoardDetailRes(Board board) {
+        this.boardId = board.getId();
+        this.userName = board.getUser().getName();
         this.title = board.getTitle();
         this.content = board.getContent();
     }

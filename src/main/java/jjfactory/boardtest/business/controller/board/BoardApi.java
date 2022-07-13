@@ -6,7 +6,7 @@ import jjfactory.boardtest.global.dto.ApiResponse;
 import jjfactory.boardtest.business.dto.board.BoardDto;
 import jjfactory.boardtest.business.dto.board.BoardResponse;
 import jjfactory.boardtest.business.dto.board.BoardUpdateReq;
-import jjfactory.boardtest.business.dto.board.FindBoardRes;
+import jjfactory.boardtest.business.dto.board.BoardDetailRes;
 import jjfactory.boardtest.business.dto.comment.CommentResponse;
 import jjfactory.boardtest.business.service.board.BoardService;
 import jjfactory.boardtest.business.service.comment.CommentService;
@@ -25,7 +25,7 @@ public class BoardApi {
     private final CommentService commentService;
 
     @GetMapping("/{boardId}")
-    public ApiResponse<FindBoardRes> getBoard(@PathVariable Long boardId){
+    public ApiResponse<BoardDetailRes> getBoard(@PathVariable Long boardId){
         return new ApiResponse<>(boardService.findBoard(boardId));
     }
 
