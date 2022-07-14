@@ -51,9 +51,9 @@ public class BoardService {
     }
 
     @Transactional(readOnly = true)
-    public PagingResponse<BoardResponse> findBoardsByCategoryId(int page,String query,Long categoryId){
+    public PagingResponse<BoardResponse> findBoardsByCategoryName(int page,String query,String categoryName){
         Pageable pageRequest = new MyPageRequest(page,10).of();
-        Page<BoardResponse> boards = boardQueryRepository.findBoardsByCategory(pageRequest,categoryId);
+        Page<BoardResponse> boards = boardQueryRepository.findBoardsByCategoryName(pageRequest,categoryName);
         return new PagingResponse<>(boards);
     }
 

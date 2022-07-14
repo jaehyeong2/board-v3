@@ -36,10 +36,10 @@ public class BoardApi {
     }
 
     @GetMapping("/category/{categoryId}")
-    public ApiPagingResponse<BoardResponse> getBoardsByCategory(@RequestParam(defaultValue = "1", required = false, name = "page") int page,
+    public ApiPagingResponse<BoardResponse> getBoardsByCategoryName(@RequestParam(defaultValue = "1", required = false, name = "page") int page,
                                                                 @RequestParam(required = false) String query,
-                                                                @PathVariable Long categoryId){
-        return new ApiPagingResponse<>(boardService.findBoardsByCategoryId(page,query,categoryId));
+                                                                @RequestParam String categoryName){
+        return new ApiPagingResponse<>(boardService.findBoardsByCategoryName(page,query,categoryName));
     }
 
     @GetMapping("/{boardId}/comments")

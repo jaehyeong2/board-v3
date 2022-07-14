@@ -30,10 +30,10 @@ public class BoardQueryRepository {
         return new PageImpl<>(results,pageable, results.size());
     }
 
-    public Page<BoardResponse> findBoardsByCategory(Pageable pageable, Long categoryId){
+    public Page<BoardResponse> findBoardsByCategoryName(Pageable pageable, String categoryName){
         List<BoardResponse> results = queryFactory.select(Projections.constructor(BoardResponse.class,board))
                 .from(board)
-                .where(board.category.id.eq(categoryId))
+                .where(board.category.name.eq(categoryName))
                 .orderBy(board.createDate.desc())
                 .limit(pageable.getPageSize())
                 .offset(pageable.getOffset())
