@@ -86,7 +86,7 @@ public class BoardService {
 
     public String deleteBoard(Long id){
         Board board = getBoard(id);
-        board.deleteBoard();
+        board.delete();
         return "Y";
     }
 

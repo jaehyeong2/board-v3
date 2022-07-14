@@ -63,6 +63,12 @@ public class BoardApi {
         return new ApiResponse<>(boardService.updateBoard(dto,id));
     }
 
+    @DeleteMapping("/{id}")
+    public ApiResponse<String> deleteBoard(@PathVariable Long id){
+        return new ApiResponse<>(boardService.deleteBoard(id));
+    }
+
+
     @PostMapping("/{boardId}/like")
     public ApiResponse<String> likeBoard(@PathVariable Long boardId,
                                          @AuthenticationPrincipal PrincipalDetails principal){

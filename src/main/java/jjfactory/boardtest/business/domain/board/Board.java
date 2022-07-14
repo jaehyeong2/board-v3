@@ -77,7 +77,7 @@ public class Board extends BaseTimeEntity {
         this.content = content;
     }
 
-    public void deleteBoard() {
+    public void delete() {
         isView = false;
     }
 

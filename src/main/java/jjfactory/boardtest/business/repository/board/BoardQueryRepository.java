@@ -21,6 +21,7 @@ public class BoardQueryRepository {
     public Page<BoardResponse> findAllBoards(Pageable pageable){
         List<BoardResponse> results = queryFactory.select(Projections.constructor(BoardResponse.class,board))
                 .from(board)
+                .where(board.isView.eq(true))
                 .orderBy(board.createDate.desc())
                 .limit(pageable.getPageSize())
                 .offset(pageable.getOffset())
