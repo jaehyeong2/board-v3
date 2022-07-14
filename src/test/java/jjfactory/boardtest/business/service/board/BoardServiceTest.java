@@ -1,4 +1,4 @@
-package jjfactory.boardtest.board;
+package jjfactory.boardtest.business.service.board;
 
 import jjfactory.boardtest.business.domain.board.Board;
 import jjfactory.boardtest.business.domain.board.Category;
@@ -8,9 +8,7 @@ import jjfactory.boardtest.business.dto.board.BoardResponse;
 import jjfactory.boardtest.business.repository.board.BoardRepository;
 import jjfactory.boardtest.business.repository.board.CategoryRepository;
 import jjfactory.boardtest.business.repository.user.UserRepository;
-import jjfactory.boardtest.business.service.board.BoardService;
 import jjfactory.boardtest.global.dto.PagingResponse;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -21,18 +19,19 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("test")
 @Transactional
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class BoardServiceTest {
+class BoardServiceTest {
+
     @Autowired
     CategoryRepository categoryRepository;
 
@@ -42,7 +41,8 @@ public class BoardServiceTest {
     @Autowired
     BoardService boardService;
 
-    @Autowired BoardRepository boardRepository;
+    @Autowired
+    BoardRepository boardRepository;
 
     User user1;
     User user2;
@@ -134,5 +134,37 @@ public class BoardServiceTest {
 
         assertThat(result.getTotalCount()).isEqualTo(7);
         assertThat(result2.getTotalCount()).isEqualTo(0);
+    }
+
+    @Test
+    void findBoard() {
+    }
+
+    @Test
+    void findBoards() {
+    }
+
+    @Test
+    void findBoardsByCategoryId() {
+    }
+
+    @Test
+    void createBoard() {
+    }
+
+    @Test
+    void deleteBoard() {
+    }
+
+    @Test
+    void updateBoard() {
+    }
+
+    @Test
+    void boardLike() {
+    }
+
+    @Test
+    void boardDislike() {
     }
 }

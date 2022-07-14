@@ -1,4 +1,4 @@
-package jjfactory.boardtest.user;
+package jjfactory.boardtest.business.util;
 
 public class SlangTest {
 
