@@ -49,14 +49,14 @@ public class AuthService {
     }
 
 
-    public void matchPassword(String reqPassword,String userPassword){
+    private void matchPassword(String reqPassword,String userPassword){
         boolean result = passwordEncoder.matches(reqPassword,userPassword);
         if(!result){
             throw new BusinessException(ErrorCode.NOT_MATCH_PASSWORD);
         }
     }
 
-    public String createToken(User user){
+    private String createToken(User user){
         return tokenProvider.createToken(user.getUsername(),user.getRoles());
     }
 }
