@@ -12,14 +12,12 @@ public class CommentResponse {
     private Long boardId;
     private Long userId;
     private String content;
-    private Boolean isView;
     private int likeCount;
 
     public CommentResponse(Comment comment) {
         this.boardId = comment.getBoard().getId();
         this.userId = comment.getUser().getId();
         this.content = comment.getContent();
-        this.isView = comment.getIsView();
         this.likeCount = comment.getLikeCount();
     }
 }

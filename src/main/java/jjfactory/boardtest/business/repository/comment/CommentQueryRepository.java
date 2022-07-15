@@ -19,7 +19,11 @@ public class CommentQueryRepository {
     private final JPAQueryFactory queryFactory;
 
     public Page<CommentResponse> findComments(Pageable pageable,Long boardId){
-        List<CommentResponse> results = queryFactory.select(Projections.constructor(CommentResponse.class, comment))
+        List<CommentResponse> results = queryFactory.select(Projections.constructor(CommentResponse.class,
+                        comment.board.id.as("boardId"),
+                        comment.user.id.as("userId"),
+                        comment.content.as("content"),
+                        comment.likeCount.as("likeCount")))
                 .from(comment)
                 .where(comment.board.id.eq(boardId))
                 .orderBy(comment.createDate.desc())

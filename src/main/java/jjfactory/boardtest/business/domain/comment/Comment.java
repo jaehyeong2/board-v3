@@ -28,8 +28,6 @@ public class Comment extends BaseTimeEntity {
 
     private String content;
 
-    private Boolean isView;
-
     @Enumerated(EnumType.STRING)
     private DeleteStatus isDeleted;
 
@@ -43,11 +41,11 @@ public class Comment extends BaseTimeEntity {
     private List<Comment> children = new ArrayList<>();
 
     @Builder
-    public Comment(User user, Board board, String content, Boolean isView,int likeCount) {
+    public Comment(User user, Board board, String content, DeleteStatus deleteStatus,int likeCount) {
         this.user = user;
         this.board = board;
         this.content = content;
-        this.isView = isView;
+        this.isDeleted = deleteStatus;
         this.likeCount = likeCount;
     }
 
@@ -56,13 +54,13 @@ public class Comment extends BaseTimeEntity {
                 .content(dto.getContent())
                 .user(user)
                 .board(board)
-                .isView(true)
+                .deleteStatus(DeleteStatus.NON_DELETED)
                 .likeCount(0)
                 .build();
     }
 
     public void deleteComment() {
-        isView = false;
+        isDeleted = DeleteStatus.DELETED;
     }
 
     public void changeContent(String content) {
