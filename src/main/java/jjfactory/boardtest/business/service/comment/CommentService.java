@@ -67,7 +67,7 @@ public class CommentService {
     public String updateContent(CommentChange dto, Long commentId, User user){
         Comment comment = getComment(commentId);
 
-        if(comment.getUser().equals(user)){
+        if(!comment.getUser().equals(user)){
             throw new BusinessException(ErrorCode.HANDLE_ACCESS_DENIED);
         }
 
