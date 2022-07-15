@@ -1,4 +1,4 @@
-package jjfactory.boardtest.business.dto.comment;
+package jjfactory.boardtest.business.dto.user.req;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class CommentChangeDto {
-    private String content;
+public class LoginDto {
+    private String username;
+    private String password;
 }

@@ -1,4 +1,4 @@
-package jjfactory.boardtest.business.dto.user;
+package jjfactory.boardtest.business.dto.user.res;
 
 import jjfactory.boardtest.business.domain.user.User;
 import lombok.AllArgsConstructor;

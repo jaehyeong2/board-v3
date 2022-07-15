@@ -1,4 +1,4 @@
-package jjfactory.boardtest.business.dto.user;
+package jjfactory.boardtest.business.dto.user.req;
 
 import jjfactory.boardtest.business.domain.user.Gender;
 import jjfactory.boardtest.business.domain.user.Role;

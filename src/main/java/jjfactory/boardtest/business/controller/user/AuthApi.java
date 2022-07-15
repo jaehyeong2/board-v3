@@ -1,9 +1,9 @@
 package jjfactory.boardtest.business.controller.user;
 
 import jjfactory.boardtest.global.dto.ApiResponse;
-import jjfactory.boardtest.business.dto.user.LoginDto;
-import jjfactory.boardtest.business.dto.user.TokenAndUserRes;
-import jjfactory.boardtest.business.dto.user.UserDto;
+import jjfactory.boardtest.business.dto.user.req.LoginDto;
+import jjfactory.boardtest.business.dto.user.res.TokenAndUserRes;
+import jjfactory.boardtest.business.dto.user.req.UserDto;
 import jjfactory.boardtest.business.service.user.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

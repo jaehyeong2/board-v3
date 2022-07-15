@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jjfactory.boardtest.business.domain.board.Board;
 import jjfactory.boardtest.business.domain.comment.Comment;
 import jjfactory.boardtest.business.domain.user.User;
-import jjfactory.boardtest.business.dto.comment.CommentDto;
+import jjfactory.boardtest.business.dto.comment.req.CommentCreate;
 import jjfactory.boardtest.business.repository.board.BoardRepository;
 import jjfactory.boardtest.business.repository.comment.CommentRepository;
 import jjfactory.boardtest.business.repository.user.UserRepository;
@@ -13,13 +13,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureWebMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -72,7 +70,7 @@ class CommentApiTest {
         Board board = Board.builder().title("제목1").content("게시글1").build();
         boardRepository.save(board);
 
-        CommentDto dto = new CommentDto("내용입니다", board.getId());
+        CommentCreate dto = new CommentCreate("내용입니다", board.getId());
 
         Comment comment = Comment.create(dto, user, board);
         String stringComment = objectMapper.writeValueAsString(comment);

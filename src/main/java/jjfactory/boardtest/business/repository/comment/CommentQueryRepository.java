@@ -2,7 +2,7 @@ package jjfactory.boardtest.business.repository.comment;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import jjfactory.boardtest.business.dto.comment.CommentResponse;
+import jjfactory.boardtest.business.dto.comment.res.CommentResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

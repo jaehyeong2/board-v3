@@ -2,7 +2,7 @@ package jjfactory.boardtest.business.domain.board;
 
 import jjfactory.boardtest.business.domain.BaseTimeEntity;
 import jjfactory.boardtest.business.domain.user.User;
-import jjfactory.boardtest.business.dto.board.BoardDto;
+import jjfactory.boardtest.business.dto.board.req.BoardCreate;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -56,7 +56,7 @@ public class Board extends BaseTimeEntity {
         this.viewCount = viewCount;
     }
 
-    public static Board createBoard(BoardDto dto, User user, Category category){
+    public static Board createBoard(BoardCreate dto, User user, Category category){
         return builder()
                 .title(dto.getTitle())
                 .content(dto.getContent())

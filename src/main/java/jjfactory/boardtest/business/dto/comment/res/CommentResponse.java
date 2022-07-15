@@ -1,4 +1,4 @@
-package jjfactory.boardtest.business.dto.comment;
+package jjfactory.boardtest.business.dto.comment.res;
 
 import jjfactory.boardtest.business.domain.comment.Comment;
 import lombok.AllArgsConstructor;

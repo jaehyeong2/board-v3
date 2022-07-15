@@ -1,10 +1,10 @@
 package jjfactory.boardtest.business.controller.comment;
 
+import jjfactory.boardtest.business.dto.comment.res.CommentResponse;
 import jjfactory.boardtest.global.config.auth.PrincipalDetails;
 import jjfactory.boardtest.global.dto.ApiResponse;
-import jjfactory.boardtest.business.dto.comment.CommentChangeDto;
-import jjfactory.boardtest.business.dto.comment.CommentDto;
-import jjfactory.boardtest.business.dto.comment.FindCommentRes;
+import jjfactory.boardtest.business.dto.comment.req.CommentChange;
+import jjfactory.boardtest.business.dto.comment.req.CommentCreate;
 import jjfactory.boardtest.business.service.comment.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -17,12 +17,12 @@ public class CommentApi {
     private final CommentService commentService;
 
     @GetMapping("/{id}")
-    public ApiResponse<FindCommentRes> getComment(@PathVariable Long id){
+    public ApiResponse<CommentResponse> getComment(@PathVariable Long id){
         return new ApiResponse<>(commentService.findComment(id));
     }
 
     @PostMapping("")
-    public ApiResponse<String> createComment(@RequestBody CommentDto dto, @AuthenticationPrincipal PrincipalDetails principal){
+    public ApiResponse<String> createComment(@RequestBody CommentCreate dto, @AuthenticationPrincipal PrincipalDetails principal){
         return new ApiResponse(commentService.createComment(dto,principal.getUser()));
     }
 
@@ -32,7 +32,7 @@ public class CommentApi {
     }
 
     @PatchMapping("/{commentId}")
-    public ApiResponse<String> changeContent(@RequestBody CommentChangeDto dto,
+    public ApiResponse<String> changeContent(@RequestBody CommentChange dto,
                                              @PathVariable Long commentId,
                                              @AuthenticationPrincipal PrincipalDetails principal){
         return new ApiResponse(commentService.updateContent(dto,commentId,principal.getUser()));

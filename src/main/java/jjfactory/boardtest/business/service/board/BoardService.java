@@ -8,10 +8,10 @@ import jjfactory.boardtest.business.domain.board.Category;
 import jjfactory.boardtest.business.domain.user.User;
 import jjfactory.boardtest.global.dto.MyPageRequest;
 import jjfactory.boardtest.global.dto.PagingResponse;
-import jjfactory.boardtest.business.dto.board.BoardDto;
-import jjfactory.boardtest.business.dto.board.BoardResponse;
-import jjfactory.boardtest.business.dto.board.BoardUpdateReq;
-import jjfactory.boardtest.business.dto.board.BoardDetailRes;
+import jjfactory.boardtest.business.dto.board.req.BoardCreate;
+import jjfactory.boardtest.business.dto.board.res.BoardResponse;
+import jjfactory.boardtest.business.dto.board.req.BoardUpdate;
+import jjfactory.boardtest.business.dto.board.res.BoardDetailRes;
 //import jjfactory.boardtest.repository.board.*;
 import jjfactory.boardtest.business.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -57,7 +57,7 @@ public class BoardService {
         return new PagingResponse<>(boards);
     }
 
-    public String createBoard(BoardDto dto, List<MultipartFile> images, Long userId){
+    public String createBoard(BoardCreate dto, List<MultipartFile> images, Long userId){
         Category category = categoryRepository.findById(dto.getCategoryId()).orElseThrow(() -> {
             throw new NoSuchElementException("조회 실패");
         });
@@ -90,7 +90,7 @@ public class BoardService {
         return "Y";
     }
 
-    public String updateBoard(BoardUpdateReq dto, Long id){
+    public String updateBoard(BoardUpdate dto, Long id){
         Board board = getBoard(id);
 
         board.updateBoard(dto.getTitle(), dto.getContent());

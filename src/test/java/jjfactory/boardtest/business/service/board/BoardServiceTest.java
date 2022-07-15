@@ -3,8 +3,8 @@ package jjfactory.boardtest.business.service.board;
 import jjfactory.boardtest.business.domain.board.Board;
 import jjfactory.boardtest.business.domain.board.Category;
 import jjfactory.boardtest.business.domain.user.User;
-import jjfactory.boardtest.business.dto.board.BoardDto;
-import jjfactory.boardtest.business.dto.board.BoardResponse;
+import jjfactory.boardtest.business.dto.board.req.BoardCreate;
+import jjfactory.boardtest.business.dto.board.res.BoardResponse;
 import jjfactory.boardtest.business.repository.board.BoardRepository;
 import jjfactory.boardtest.business.repository.board.CategoryRepository;
 import jjfactory.boardtest.business.repository.user.UserRepository;
@@ -23,7 +23,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 @ActiveProfiles("test")
 @Transactional
@@ -59,9 +58,9 @@ class BoardServiceTest {
 
         User findUser = userRepository.findByUsername("test11");
 
-        BoardDto boardDto = new BoardDto("게시글1","내용내용",category.getId());
+        BoardCreate boardCreate = new BoardCreate("게시글1","내용내용",category.getId());
 
-        boardService.createBoard(boardDto,null,findUser.getId());
+        boardService.createBoard(boardCreate,null,findUser.getId());
         assertThat(findUser.getActivePoint()).isEqualTo(3);
 
     }
@@ -76,9 +75,9 @@ class BoardServiceTest {
         userRepository.save(user1);
         userRepository.save(user2);
         categoryRepository.save(category);
-        BoardDto boardDto = new BoardDto("게시글1","내용내용",category.getId());
+        BoardCreate boardCreate = new BoardCreate("게시글1","내용내용",category.getId());
 
-        Board board = Board.createBoard(boardDto, user1, category);
+        Board board = Board.createBoard(boardCreate, user1, category);
         boardRepository.save(board);
 
         boardService.boardLike(user2,board.getId());
@@ -96,9 +95,9 @@ class BoardServiceTest {
         userRepository.save(user1);
         userRepository.save(user2);
         categoryRepository.save(category);
-        BoardDto boardDto = new BoardDto("게시글1","내용내용",category.getId());
+        BoardCreate boardCreate = new BoardCreate("게시글1","내용내용",category.getId());
 
-        Board board = Board.createBoard(boardDto, user1, category);
+        Board board = Board.createBoard(boardCreate, user1, category);
         boardRepository.save(board);
 
         boardService.boardDislike(user2,board.getId());
@@ -115,15 +114,15 @@ class BoardServiceTest {
         userRepository.save(user1);
         categoryRepository.save(category);
 
-        BoardDto boardDto = new BoardDto("게시글1","내용내용",category.getId());
+        BoardCreate boardCreate = new BoardCreate("게시글1","내용내용",category.getId());
 
-        Board board = Board.createBoard(boardDto, user1, category);
-        Board board2 = Board.createBoard(boardDto, user1, category);
-        Board board3 = Board.createBoard(boardDto, user1, category);
-        Board board4 = Board.createBoard(boardDto, user1, category);
-        Board board5 = Board.createBoard(boardDto, user1, category);
-        Board board6 = Board.createBoard(boardDto, user1, category);
-        Board board7 = Board.createBoard(boardDto, user1, category);
+        Board board = Board.createBoard(boardCreate, user1, category);
+        Board board2 = Board.createBoard(boardCreate, user1, category);
+        Board board3 = Board.createBoard(boardCreate, user1, category);
+        Board board4 = Board.createBoard(boardCreate, user1, category);
+        Board board5 = Board.createBoard(boardCreate, user1, category);
+        Board board6 = Board.createBoard(boardCreate, user1, category);
+        Board board7 = Board.createBoard(boardCreate, user1, category);
 
         List<Board> boards = Arrays.asList(board,board2,board3,board4,board5,board6,board7);
 

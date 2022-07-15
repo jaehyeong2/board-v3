@@ -1,7 +1,7 @@
 package jjfactory.boardtest.business.domain.user;
 
 import jjfactory.boardtest.business.domain.BaseTimeEntity;
-import jjfactory.boardtest.business.dto.user.UserDto;
+import jjfactory.boardtest.business.dto.user.req.UserDto;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;

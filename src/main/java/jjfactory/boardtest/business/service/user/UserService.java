@@ -1,7 +1,7 @@
 package jjfactory.boardtest.business.service.user;
 
 import jjfactory.boardtest.business.domain.user.User;
-import jjfactory.boardtest.business.dto.user.FindUserRes;
+import jjfactory.boardtest.business.dto.user.res.FindUserRes;
 import jjfactory.boardtest.business.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

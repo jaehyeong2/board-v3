@@ -2,7 +2,7 @@ package jjfactory.boardtest.business.repository.board;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import jjfactory.boardtest.business.dto.board.BoardResponse;
+import jjfactory.boardtest.business.dto.board.res.BoardResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

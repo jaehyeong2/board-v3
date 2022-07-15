@@ -7,10 +7,9 @@ import jjfactory.boardtest.business.domain.user.User;
 import jjfactory.boardtest.business.repository.comment.CommentQueryRepository;
 import jjfactory.boardtest.global.dto.MyPageRequest;
 import jjfactory.boardtest.global.dto.PagingResponse;
-import jjfactory.boardtest.business.dto.comment.CommentChangeDto;
-import jjfactory.boardtest.business.dto.comment.CommentDto;
-import jjfactory.boardtest.business.dto.comment.CommentResponse;
-import jjfactory.boardtest.business.dto.comment.FindCommentRes;
+import jjfactory.boardtest.business.dto.comment.req.CommentChange;
+import jjfactory.boardtest.business.dto.comment.req.CommentCreate;
+import jjfactory.boardtest.business.dto.comment.res.CommentResponse;
 import jjfactory.boardtest.global.handler.ex.BusinessException;
 import jjfactory.boardtest.global.handler.ex.ErrorCode;
 import jjfactory.boardtest.business.repository.board.BoardRepository;
@@ -36,9 +35,9 @@ public class CommentService {
     private final BoardRepository boardRepository;
 
     @Transactional(readOnly = true)
-    public FindCommentRes findComment(Long id){
+    public CommentResponse findComment(Long id){
         Comment comment = getComment(id);
-        return new FindCommentRes(comment);
+        return new CommentResponse(comment);
     }
 
     @Transactional(readOnly = true)
@@ -48,7 +47,7 @@ public class CommentService {
         return new PagingResponse<>(comments);
     }
 
-    public String createComment(CommentDto dto, User user){
+    public String createComment(CommentCreate dto, User user){
         Board board = boardRepository.findById(dto.getBoardId()).orElseThrow(() -> {
             throw new NoSuchElementException("조회실패");
         });
@@ -65,7 +64,7 @@ public class CommentService {
         return "Y";
     }
 
-    public String updateContent(CommentChangeDto dto,Long commentId,User user){
+    public String updateContent(CommentChange dto, Long commentId, User user){
         Comment comment = getComment(commentId);
 
         if(comment.getUser().equals(user)){

@@ -2,7 +2,7 @@ package jjfactory.boardtest.business.repository.board;
 
 import jjfactory.boardtest.business.domain.board.Board;
 import jjfactory.boardtest.business.domain.board.Category;
-import jjfactory.boardtest.business.dto.board.BoardResponse;
+import jjfactory.boardtest.business.dto.board.res.BoardResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

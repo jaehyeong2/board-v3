@@ -3,11 +3,11 @@ package jjfactory.boardtest.business.controller.board;
 import jjfactory.boardtest.global.config.auth.PrincipalDetails;
 import jjfactory.boardtest.global.dto.ApiPagingResponse;
 import jjfactory.boardtest.global.dto.ApiResponse;
-import jjfactory.boardtest.business.dto.board.BoardDto;
-import jjfactory.boardtest.business.dto.board.BoardResponse;
-import jjfactory.boardtest.business.dto.board.BoardUpdateReq;
-import jjfactory.boardtest.business.dto.board.BoardDetailRes;
-import jjfactory.boardtest.business.dto.comment.CommentResponse;
+import jjfactory.boardtest.business.dto.board.req.BoardCreate;
+import jjfactory.boardtest.business.dto.board.res.BoardResponse;
+import jjfactory.boardtest.business.dto.board.req.BoardUpdate;
+import jjfactory.boardtest.business.dto.board.res.BoardDetailRes;
+import jjfactory.boardtest.business.dto.comment.res.CommentResponse;
 import jjfactory.boardtest.business.service.board.BoardService;
 import jjfactory.boardtest.business.service.comment.CommentService;
 import lombok.RequiredArgsConstructor;
@@ -50,14 +50,14 @@ public class BoardApi {
     }
 
     @PostMapping("")
-    public ApiResponse<String> createBoard(@RequestBody BoardDto dto,
+    public ApiResponse<String> createBoard(@RequestBody BoardCreate dto,
                                            @RequestParam(required = false) List<MultipartFile> images,
                                            @AuthenticationPrincipal PrincipalDetails principal){
         return new ApiResponse<>(boardService.createBoard(dto,images,principal.getUser().getId()));
     }
 
     @PatchMapping("/{id}")
-    public ApiResponse<String> updateBoard(@RequestBody BoardUpdateReq dto,
+    public ApiResponse<String> updateBoard(@RequestBody BoardUpdate dto,
                                            @PathVariable Long id,
                                            @AuthenticationPrincipal PrincipalDetails principal){
         return new ApiResponse<>(boardService.updateBoard(dto,id));

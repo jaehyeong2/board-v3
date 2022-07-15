@@ -1,7 +1,7 @@
 package jjfactory.boardtest.business.controller.user;
 
 
-import jjfactory.boardtest.business.dto.user.FindUserRes;
+import jjfactory.boardtest.business.dto.user.res.FindUserRes;
 import jjfactory.boardtest.business.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
