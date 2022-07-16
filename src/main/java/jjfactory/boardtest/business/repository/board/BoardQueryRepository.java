@@ -27,7 +27,12 @@ public class BoardQueryRepository {
                 .offset(pageable.getOffset())
                 .fetch();
 
-        return new PageImpl<>(results,pageable, results.size());
+        int total = queryFactory.select(Projections.constructor(BoardResponse.class, board))
+                .from(board)
+                .where(board.isView.eq(true))
+                .fetch().size();
+
+        return new PageImpl<>(results,pageable, total);
     }
 
     public Page<BoardResponse> findBoardsByCategoryName(Pageable pageable, String categoryName){

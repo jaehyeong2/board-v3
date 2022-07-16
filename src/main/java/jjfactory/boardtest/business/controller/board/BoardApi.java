@@ -56,7 +56,7 @@ public class BoardApi {
         return new ApiResponse<>(boardService.createBoard(dto,images,principal.getUser().getId()));
     }
 
-    @PatchMapping("/{id}")
+    @PutMapping("/{id}")
     public ApiResponse<String> updateBoard(@RequestBody BoardUpdate dto,
                                            @PathVariable Long id,
                                            @AuthenticationPrincipal PrincipalDetails principal){
