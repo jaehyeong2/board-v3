@@ -1,5 +1,6 @@
 package jjfactory.boardtest.business.controller.board;
 
+import jjfactory.boardtest.business.repository.board.model.BoardSearchModel;
 import jjfactory.boardtest.global.config.auth.PrincipalDetails;
 import jjfactory.boardtest.global.dto.ApiPagingResponse;
 import jjfactory.boardtest.global.dto.ApiResponse;
@@ -31,8 +32,16 @@ public class BoardApi {
 
     @GetMapping("")
     public ApiPagingResponse<BoardResponse> getBoards(@RequestParam(defaultValue = "1", required = false, name = "page") int page,
-                                                      @RequestParam(required = false) String query){
-        return new ApiPagingResponse<>(boardService.findBoards(page,query));
+                                                      @RequestParam(required = false) String title,
+                                                      @RequestParam(required = false) String content,
+                                                      @RequestParam(required = false) String username){
+        return new ApiPagingResponse<>(boardService.findBoards(page,
+                BoardSearchModel
+                        .builder()
+                        .title(title)
+                        .content(content)
+                        .username(username)
+                        .build()));
     }
 
     @GetMapping("/category/{categoryId}")

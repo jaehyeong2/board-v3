@@ -6,6 +6,7 @@ import jjfactory.boardtest.business.domain.board.BoardImage;
 import jjfactory.boardtest.business.domain.board.BoardLike;
 import jjfactory.boardtest.business.domain.board.Category;
 import jjfactory.boardtest.business.domain.user.User;
+import jjfactory.boardtest.business.repository.board.model.BoardSearchModel;
 import jjfactory.boardtest.global.dto.MyPageRequest;
 import jjfactory.boardtest.global.dto.PagingResponse;
 import jjfactory.boardtest.business.dto.board.req.BoardCreate;
@@ -44,9 +45,9 @@ public class BoardService {
         return new BoardDetailRes(board);
     }
     @Transactional(readOnly = true)
-    public PagingResponse<BoardResponse> findBoards(int page,String query){
+    public PagingResponse<BoardResponse> findBoards(int page, BoardSearchModel model){
         Pageable pageRequest = new MyPageRequest(page,10).of();
-        Page<BoardResponse> boards = boardQueryRepository.findAllBoards(pageRequest);
+        Page<BoardResponse> boards = boardQueryRepository.findAllBoards(pageRequest,model);
         return new PagingResponse<>(boards);
     }
 

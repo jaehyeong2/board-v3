@@ -30,6 +30,6 @@ public class BoardResponse {
         this.isView = board.getIsView();
         this.likeCount = board.getLikeCount();
         this.createDate = board.getCreateDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        this.userName = board.getUser().getName();
+        this.userName = board.getUser().getUsername();
     }
 }

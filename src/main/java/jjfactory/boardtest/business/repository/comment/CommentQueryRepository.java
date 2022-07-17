@@ -2,6 +2,7 @@ package jjfactory.boardtest.business.repository.comment;
 
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import jjfactory.boardtest.business.domain.comment.DeleteStatus;
 import jjfactory.boardtest.business.dto.comment.res.CommentResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,17 +21,19 @@ public class CommentQueryRepository {
 
     public Page<CommentResponse> findComments(Pageable pageable,Long boardId){
         List<CommentResponse> results = queryFactory.select(Projections.constructor(CommentResponse.class,
+                        comment.id.as("commentId"),
                         comment.user.username.as("username"),
                         comment.content.as("content"),
                         comment.likeCount.as("likeCount"),
                         comment.createDate.as("createDate")))
                 .from(comment)
-                .where(comment.board.id.eq(boardId))
+                .where(comment.board.id.eq(boardId),comment.isDeleted.eq(DeleteStatus.NON_DELETED))
                 .limit(pageable.getPageSize())
                 .offset(pageable.getOffset())
                 .fetch();
 
         int total = queryFactory.select(Projections.constructor(CommentResponse.class,
+                        comment.id.as("commentId"),
                         comment.user.username.as("username"),
                         comment.content.as("content"),
                         comment.likeCount.as("likeCount"),
