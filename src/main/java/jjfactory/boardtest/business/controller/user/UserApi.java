@@ -25,4 +25,9 @@ public class UserApi {
     public ApiResponse<UserInfoRes> getMyInfo(@PathVariable Long userId){
         return new ApiResponse<>(userService.getMyInfo(userId));
     }
+
+    @DeleteMapping("/{userId}")
+    public ApiResponse<String> withdraw(@PathVariable Long userId){
+        return new ApiResponse<>(userService.deleteUser(userId));
+    }
 }

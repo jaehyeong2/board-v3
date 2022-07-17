@@ -31,11 +31,12 @@ public class UserService {
         return new FindUserRes(user);
     }
 
-    public void deleteUser(Long id){
+    public String deleteUser(Long id){
         User user = userRepository.findById(id).orElseThrow(() -> {
             throw new NoSuchElementException("조회 실패");
         });
 
         user.withDraw();
+        return "Y";
     }
 }

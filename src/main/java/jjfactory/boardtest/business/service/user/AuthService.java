@@ -43,10 +43,12 @@ public class AuthService {
 
     public TokenAndUserRes login(LoginDto dto){
         User user = userQueryRepository.findByUsername(dto.getUsername());
+        if(user.getActiveState() == false) throw new BusinessException(ErrorCode.WITH_DRAW_USER);
         matchPassword(dto.getPassword(),user.getPassword());
         String token = createToken(user);
         return new TokenAndUserRes(user,token);
     }
+
 
 
     private void matchPassword(String reqPassword,String userPassword){
