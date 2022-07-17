@@ -45,7 +45,7 @@ public class BoardApi {
     @GetMapping("/{boardId}/comments")
     public ApiPagingResponse<CommentResponse> getCommentsByBoardId(@RequestParam(required = false, defaultValue = "1") int page,
                                                                    @RequestParam(required = false) String query,
-                                                                   @RequestParam(required = false) Long boardId){
+                                                                   @PathVariable Long boardId){
         return new ApiPagingResponse<>(commentService.findCommentsByBoardId(page,boardId));
     }
 

@@ -20,18 +20,25 @@ public class CommentQueryRepository {
 
     public Page<CommentResponse> findComments(Pageable pageable,Long boardId){
         List<CommentResponse> results = queryFactory.select(Projections.constructor(CommentResponse.class,
-                        comment.board.id.as("boardId"),
-                        comment.user.id.as("userId"),
+                        comment.user.username.as("username"),
                         comment.content.as("content"),
-                        comment.likeCount.as("likeCount")))
+                        comment.likeCount.as("likeCount"),
+                        comment.createDate.as("createDate")))
                 .from(comment)
                 .where(comment.board.id.eq(boardId))
-                .orderBy(comment.createDate.desc())
                 .limit(pageable.getPageSize())
                 .offset(pageable.getOffset())
                 .fetch();
 
-        return new PageImpl<>(results,pageable, results.size());
+        int total = queryFactory.select(Projections.constructor(CommentResponse.class,
+                        comment.user.username.as("username"),
+                        comment.content.as("content"),
+                        comment.likeCount.as("likeCount"),
+                        comment.createDate.as("createDate")))
+                .from(comment)
+                .where(comment.board.id.eq(boardId)).fetch().size();
+
+        return new PageImpl<>(results,pageable, total);
     }
 
     // 대댓글 기능 구현

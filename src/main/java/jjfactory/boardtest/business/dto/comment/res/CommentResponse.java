@@ -5,19 +5,21 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 public class CommentResponse {
-    private Long boardId;
-    private Long userId;
+    private String username;
     private String content;
     private int likeCount;
+    private LocalDateTime createDate;
 
     public CommentResponse(Comment comment) {
-        this.boardId = comment.getBoard().getId();
-        this.userId = comment.getUser().getId();
+        this.username = comment.getUser().getUsername();
         this.content = comment.getContent();
         this.likeCount = comment.getLikeCount();
+        this.createDate = comment.getCreateDate();
     }
 }
