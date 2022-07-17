@@ -10,10 +10,12 @@ import lombok.NoArgsConstructor;
 @Getter
 public class TokenAndUserRes {
     private String username;
+    private Long userId;
     private String token;
 
     public TokenAndUserRes(User user, String token) {
         this.username = user.getUsername();
+        this.userId = user.getId();
         this.token = token;
     }
 }

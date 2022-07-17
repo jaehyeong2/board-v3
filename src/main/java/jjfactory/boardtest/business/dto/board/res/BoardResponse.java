@@ -1,6 +1,7 @@
 package jjfactory.boardtest.business.dto.board.res;
 
 import jjfactory.boardtest.business.domain.board.Board;
+import jjfactory.boardtest.business.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,14 +23,13 @@ public class BoardResponse {
     private int likeCount;
     private String createDate;
 
-    public BoardResponse(Board board) {
+    public BoardResponse(Board board, User user) {
         this.boardId = board.getId();
         this.title = board.getTitle();
-        this.content = board.getContent();
         this.categoryId = board.getCategory().getId();
         this.isView = board.getIsView();
         this.likeCount = board.getLikeCount();
         this.createDate = board.getCreateDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        this.userName = board.getUser().getUsername();
+        this.userName = user.getUsername();
     }
 }

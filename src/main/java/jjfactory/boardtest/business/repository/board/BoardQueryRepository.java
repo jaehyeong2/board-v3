@@ -3,6 +3,7 @@ package jjfactory.boardtest.business.repository.board;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import jjfactory.boardtest.business.domain.user.QUser;
 import jjfactory.boardtest.business.dto.board.res.BoardResponse;
 import jjfactory.boardtest.business.repository.board.model.BoardSearchModel;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,7 @@ import org.springframework.util.StringUtils;
 import java.util.List;
 
 import static jjfactory.boardtest.business.domain.board.QBoard.board;
+import static jjfactory.boardtest.business.domain.user.QUser.*;
 
 @RequiredArgsConstructor
 @Repository
@@ -22,8 +24,9 @@ public class BoardQueryRepository {
     private final JPAQueryFactory queryFactory;
 
     public Page<BoardResponse> findAllBoards(Pageable pageable, BoardSearchModel model){
-        List<BoardResponse> results = queryFactory.select(Projections.constructor(BoardResponse.class,board))
+        List<BoardResponse> results = queryFactory.select(Projections.constructor(BoardResponse.class,board, user))
                 .from(board)
+                .innerJoin(user).on(user.id.eq(board.user.id))
                 .where(board.isView.eq(true),
                         containsContent(model.getContent()),
                         containsTitle(model.getTitle()),
@@ -33,8 +36,9 @@ public class BoardQueryRepository {
                 .offset(pageable.getOffset())
                 .fetch();
 
-        int total = queryFactory.select(Projections.constructor(BoardResponse.class, board))
+        int total = queryFactory.select(Projections.constructor(BoardResponse.class, board,user))
                 .from(board)
+                .innerJoin(user).on(user.id.eq(board.user.id))
                 .where(board.isView.eq(true),
                         containsContent(model.getContent()),
                         containsTitle(model.getTitle()),

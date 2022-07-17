@@ -3,6 +3,7 @@ package jjfactory.boardtest.business.repository.board;
 import jjfactory.boardtest.business.domain.board.Board;
 import jjfactory.boardtest.business.domain.board.Category;
 import jjfactory.boardtest.business.dto.board.res.BoardResponse;
+import jjfactory.boardtest.business.repository.board.model.BoardSearchModel;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,8 @@ class BoardQueryRepositoryTest {
         boardRepository.saveAll(boardList);
 
         Pageable request = PageRequest.of(1, 10);
-        Page<BoardResponse> responses = boardQueryRepository.findAllBoards(request);
+        BoardSearchModel model = BoardSearchModel.builder().build();
+        Page<BoardResponse> responses = boardQueryRepository.findAllBoards(request,model);
 
         assertThat(responses.getSize()).isEqualTo(10);
     }
