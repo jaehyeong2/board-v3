@@ -1,5 +1,6 @@
 package jjfactory.boardtest.business.controller.board;
 
+import io.swagger.annotations.ApiOperation;
 import jjfactory.boardtest.business.repository.board.model.BoardSearchModel;
 import jjfactory.boardtest.global.config.auth.PrincipalDetails;
 import jjfactory.boardtest.global.dto.ApiPagingResponse;
@@ -26,12 +27,14 @@ public class BoardApi {
     private final CommentService commentService;
 
     @GetMapping("/{boardId}")
+    @ApiOperation(value = "게시글 상세보기", notes = "단일 게시물 상세보기 api입니다.")
     public ApiResponse<BoardDetailRes> getBoard(@PathVariable Long boardId){
         return new ApiResponse<>(boardService.findBoard(boardId));
     }
 
     @GetMapping("")
-    public ApiPagingResponse<BoardResponse> getBoards(@RequestParam(defaultValue = "1", required = false, name = "page") int page,
+    @ApiOperation(value = "게시글 전체보기 페이징", notes = "게시물 전체를 조회하는 api입니다")
+    public ApiPagingResponse<BoardResponse> getBoards(@RequestParam(defaultValue = "1", required = false) int page,
                                                       @RequestParam(required = false) String title,
                                                       @RequestParam(required = false) String content,
                                                       @RequestParam(required = false) String username){
@@ -52,6 +55,7 @@ public class BoardApi {
     }
 
     @GetMapping("/{boardId}/comments")
+    @ApiOperation(value = "댓글 전체가져오기", notes = "boardId에 해당하는 모든 댓글을 select해옵니다.")
     public ApiPagingResponse<CommentResponse> getCommentsByBoardId(@RequestParam(required = false, defaultValue = "1") int page,
                                                                    @RequestParam(required = false) String query,
                                                                    @PathVariable Long boardId){
@@ -59,6 +63,7 @@ public class BoardApi {
     }
 
     @PostMapping("")
+    @ApiOperation(value = "게시글 생성")
     public ApiResponse<String> createBoard(@RequestBody BoardCreate dto,
                                            @RequestParam(required = false) List<MultipartFile> images,
                                            @AuthenticationPrincipal PrincipalDetails principal){
